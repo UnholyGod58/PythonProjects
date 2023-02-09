@@ -10,6 +10,8 @@ P1_Boat1b = ""
 P1_Boat2b = ""
 P2_Boat1b = ""
 P2_Boat2b = ""
+P1_Score = ""
+P2_Score = ""
 def pick_boat(Boata, Boatb):
     global Vaild_Position
     Position_1 = int(Boata[1]) - 1
@@ -64,7 +66,7 @@ def pick_boat2(BoatA, BoatB, BoatA1, BoatB1):
     #ensures that the second position of the boat is valid
     return BoatA, BoatB
 
-def check_boat(boat):
+def check_in(boat):
     while not boat[0] in "abcde" or not boat[1] in "12345" or len(boat) != 2:
         boat = (input("Please enter a valid position (a1 - e5): ")).lower()
     return boat
@@ -73,7 +75,7 @@ def check_boat(boat):
 #player 1 placing first boat
 
 P1_Boat1a = (input("Player 1, Select boat position (a1 - e5): ")).lower()
-P1_Boat1a = check_boat(P1_Boat1a)
+P1_Boat1a = check_in(P1_Boat1a)
 P1_Boat1a, P1_Boat1b = pick_boat(P1_Boat1a, P1_Boat1b)
 
 while not P1_Boat1b in Vaild_Position:
@@ -82,7 +84,7 @@ while not P1_Boat1b in Vaild_Position:
 #player 1 placing second boat
 
 P1_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
-P1_Boat2a = check_boat(P1_Boat2a)
+P1_Boat2a = check_in(P1_Boat2a)
 while P1_Boat2a == P1_Boat1a or P1_Boat2a == P1_Boat1b:
     P1_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
 
@@ -94,7 +96,7 @@ os.system('cls' if os.name == 'nt' else 'clear') # i googled this, it clears the
 print("Player 1 complete, pass to player 2")
 
 P2_Boat1a = (input("Player 2, Select boat position (a1 - e5): ")).lower()
-P2_Boat1a = check_boat(P2_Boat1a)
+P2_Boat1a = check_in(P2_Boat1a)
 P2_Boat1a, P2_Boat1b = pick_boat(P2_Boat1a, P2_Boat1b)
 
 while not P2_Boat1b in Vaild_Position:
@@ -103,7 +105,7 @@ while not P2_Boat1b in Vaild_Position:
 #Player 2 placing second boat
 
 P2_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
-P2_Boat2a = check_boat(P2_Boat2a)
+P2_Boat2a = check_in(P2_Boat2a)
 while P2_Boat2a == P2_Boat1a or P2_Boat2a == P2_Boat1b:
     P2_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
 
@@ -111,4 +113,26 @@ P2_Boat2a, P2_Boat2b = pick_boat2(P2_Boat2a, P2_Boat2b, P2_Boat1a, P2_Boat1b)
 
 os.system('cls' if os.name == 'nt' else 'clear') 
 print("Player 2 complete")
+Play = True
 
+while Play:
+    P1_Pick = input("Player 1, choose a position to shoot: ")
+    P1_Pick = check_in(P1_Pick)
+    if P1_Pick == P2_Boat1a or P2_Boat1b or P2_Boat2a or P2_Boat2b:
+        print("Hit! Player 2's turn")
+        P1_Score += 1
+        if P1_Score == 4:
+            Play = False
+            print("Player 1 Wins!\n Good Job")
+    else:
+        print("Miss. Player 2's turn")
+        P2_Pick = input("Player 2, choose a position to shoot: ")
+    P2_Pick = check_in(P2_Pick)
+    if P2_Pick == P1_Boat1a or P1_Boat1b or P1_Boat2a or P1_Boat2b:
+        print("Hit! Player 1's turn")
+        P2_Score += 1
+        if P2_Score == 4:
+            Play = False
+            print("Player 2 Wins!\n Good Job")
+    else:
+        print("Miss. Player 1's turn")
