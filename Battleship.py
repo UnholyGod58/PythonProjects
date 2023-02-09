@@ -6,7 +6,8 @@ import os
 import msvcrt
 os.system('cls')
 print("Welcome to battleship\nPress any key to continue")
-msvcrt.getch()
+msvcrt.getch() #waits for a keypress
+
 os.system('cls')
 Vaild_Position = " "
 P1_Boat1b = ""
@@ -96,6 +97,14 @@ def check_in(boat):
     return boat
 #Gets the first position of the boat and makes sure it is valid
 
+def exit_check():
+    if print("would you like to play again? (y/n): ").lower == "y":
+        Reset()
+    elif print("would you like to quit? (y/n): ").lower == "n":
+        exit()
+    else:
+        print("Please enter either y or n")
+        exit_check()
 #player 1 placing first boat
 
 display_grid(grid)
@@ -187,34 +196,76 @@ row, col = convert_input(P2_Boat2b)
 grid[row][col] = 'X'
 display_grid(grid)
 
-os.system('cls' if os.name == 'nt' else 'clear') 
-print("Player 2 complete")
+print("Player 2 complete\nPress any key to continue")
+msvcrt.getch()
+
+os.system('cls') 
+
+gridP1 = []
+for i in range(5):
+    gridP1.append(['-' for i in range(5)])
+gridP2 = []
+for i in range(5):
+    gridP2.append(['-' for i in range(5)])
+
 Play = True
 
 while Play:
+    display_grid(gridP1)
     P1_Picka = input("Player 1, choose a position to shoot: ")
     while  P1_Picka in P1_Pickb:
         P1_Picka = input("You've already tired that, try again: ")
     P1_Picka = check_in(P1_Picka)
-    P1_Pickb.append(P1_Picka)
+    P1_Pickb.append(P1_Picka) # tracks geussed positions
     if P1_Picka == P2_Boat1a or P1_Picka == P2_Boat1b or P1_Picka == P2_Boat2a or P1_Picka == P2_Boat2b:
-        print("Hit! Player 2's turn")
+        os.system('cls')
+        row, col = convert_input(P1_Picka)
+        gridP1[row][col] = 'X'
+        display_grid(gridP1)
+        print("Hit! Player 2's turn\npress any key to continue")
         P1_Score += 1
         if P1_Score == 4:
+            os.system('cls')
+            display_grid(gridP1)
             Play = False
             print("Player 1 Wins!\n Good Job")
+            exit_check()
+        msvcrt.getch()
+        os.system('cls') 
     else:
-        print("Miss. Player 2's turn")
+        os.system('cls')
+        row, col = convert_input(P1_Picka)
+        gridP1[row][col] = 'O'
+        display_grid(gridP1)
+        print("Miss. Player 2's turn\npress any key to continue")
+        msvcrt.getch()
+        os.system('cls') 
+    display_grid(gridP2)
     P2_Picka = input("Player 2, choose a position to shoot: ")
     while  P2_Picka in P2_Pickb:
         P2_Picka = input("You've already tired that, try again: ")
     P2_Picka = check_in(P2_Picka)
     P2_Pickb.append(P2_Picka)
     if P2_Picka == P1_Boat1a or P2_Picka == P1_Boat1b or P2_Picka == P1_Boat2a or P2_Picka == P1_Boat2b:
-        print("Hit! Player 1's turn")
+        os.system('cls')
+        row, col = convert_input(P2_Picka)
+        gridP2[row][col] = 'X'
+        display_grid(gridP2)
+        print("Hit! Player 1's turn\npress any key to continue")
         P2_Score += 1
         if P2_Score == 4:
+            os.system('cls')
+            display_grid(gridP2)
             Play = False
             print("Player 2 Wins!\n Good Job")
+            exit_check()
+        msvcrt.getch()
+        os.system('cls')
     else:
-        print("Miss. Player 1's turn")
+        os.system('cls')
+        row, col = convert_input(P2_Picka)
+        gridP2[row][col] = 'O'
+        display_grid(gridP2)
+        print("Miss. Player 1's turn\npress any key to continue")
+        msvcrt.getch()
+        os.system('cls') 
