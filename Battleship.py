@@ -1,5 +1,6 @@
 #By : Joshua Hodder
 #Date started : 2023-02-08
+#V.1.0 finsihed : 2023-02-09
 #A Two Player Game Of Battleship
 
 import os
@@ -97,14 +98,6 @@ def check_in(boat):
     return boat
 #Gets the first position of the boat and makes sure it is valid
 
-def exit_check():
-    if print("would you like to play again? (y/n): ").lower == "y":
-        Reset()
-    elif print("would you like to quit? (y/n): ").lower == "n":
-        exit()
-    else:
-        print("Please enter either y or n")
-        exit_check()
 #player 1 placing first boat
 
 display_grid(grid)
@@ -229,7 +222,6 @@ while Play:
             display_grid(gridP1)
             Play = False
             print("Player 1 Wins!\n Good Job")
-            exit_check()
         msvcrt.getch()
         os.system('cls') 
     else:
@@ -258,7 +250,6 @@ while Play:
             display_grid(gridP2)
             Play = False
             print("Player 2 Wins!\n Good Job")
-            exit_check()
         msvcrt.getch()
         os.system('cls')
     else:
