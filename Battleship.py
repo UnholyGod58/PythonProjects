@@ -19,13 +19,15 @@ P1_Score = 0
 P2_Score = 0
 
 grid = []
-for i in range(5):
-    grid.append(['-' for i in range(5)])
+for i in range(5): # makes 5 sections to the grid list
+    grid.append(['-' for i in range(5)]) #adds 5 empty spaces to the grid list
+
+#sets up the grid
 
 def display_grid(grid):
     print('  1 2 3 4 5')
     print('a ' + ' '.join(grid[0]))
-    print('a ' + ' '.join(grid[1]))
+    print('b ' + ' '.join(grid[1]))
     print('c ' + ' '.join(grid[2]))
     print('d ' + ' '.join(grid[3]))
     print('e ' + ' '.join(grid[4]))
@@ -34,7 +36,6 @@ def convert_input(input_string):
     row = ord(input_string[0].upper()) - 65 # converts letter to number for row  (A -> 0 B-> 1 C-> 2 D-> 3 E-> 4)
     col = int(input_string[1]) - 1 # gets column number from 0 to 4
     return row, col
-
 
 def pick_boat(Boata, Boatb):
     global Vaild_Position
@@ -80,7 +81,6 @@ def pick_boat(Boata, Boatb):
     #Next position for the boat in all other positions and checks if it is valid
     return Boata, Boatb
 
-
 def pick_boat2(BoatA, BoatB, BoatA1, BoatB1):
     BoatA, BoatB = pick_boat(BoatA, BoatB)
     while not BoatB in Vaild_Position:
@@ -101,35 +101,72 @@ def check_in(boat):
 display_grid(grid)
 P1_Boat1a = (input("Player 1, Select boat position (a1 - e5): ")).lower()
 P1_Boat1a = check_in(P1_Boat1a)
+
 os.system('cls')
-row, col = convert_input(P1_Boat1a)
-grid[row][col] = 'X'
-display_grid(grid)
+row, col = convert_input(P1_Boat1a) #gets the row and column to dtermine what segement of the grid list and where in the list to place the boat
+grid[row][col] = 'X' #takes the boat position and places it in the grid list
+display_grid(grid) #displays the grid list
+
 P1_Boat1a, P1_Boat1b = pick_boat(P1_Boat1a, P1_Boat1b)
 
 while not P1_Boat1b in Vaild_Position:
         P1_Boat1b = (input("Please enter a valid position: ")).lower()
 
+os.system('cls')
+row, col = convert_input(P1_Boat1b)
+grid[row][col] = 'X'
+display_grid(grid)
+
 #player 1 placing second boat
 
 P1_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
+
 P1_Boat2a = check_in(P1_Boat2a)
 while P1_Boat2a == P1_Boat1a or P1_Boat2a == P1_Boat1b:
     P1_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
 
+os.system('cls')
+row, col = convert_input(P1_Boat2a)
+grid[row][col] = 'X'
+display_grid(grid)
+
 P1_Boat2a, P1_Boat2b = pick_boat2(P1_Boat2a, P1_Boat2b, P1_Boat1a, P1_Boat1b)
+
+os.system('cls')
+row, col = convert_input(P1_Boat2b)
+grid[row][col] = 'X'
+display_grid(grid)
+
+print("Player 1 complete, pass to player 2\nPress any key to continue")
+msvcrt.getch()
 
 #player 2 placing first boat
 
-os.system('cls') # i googled this, it clears the console
-print("Player 1 complete, pass to player 2")
+os.system('cls') 
+
+grid = []
+for i in range(5):
+    grid.append(['-' for i in range(5)])
+display_grid(grid)
+#resets the grid
 
 P2_Boat1a = (input("Player 2, Select boat position (a1 - e5): ")).lower()
 P2_Boat1a = check_in(P2_Boat1a)
+
+os.system('cls')
+row, col = convert_input(P2_Boat1a)
+grid[row][col] = 'X'
+display_grid(grid)
+
 P2_Boat1a, P2_Boat1b = pick_boat(P2_Boat1a, P2_Boat1b)
 
 while not P2_Boat1b in Vaild_Position:
     P2_Boat1b = (input("Please enter a valid position: ")).lower()
+    
+os.system('cls')
+row, col = convert_input(P2_Boat1b)
+grid[row][col] = 'X'
+display_grid(grid)
 
 #Player 2 placing second boat
 
@@ -137,8 +174,18 @@ P2_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
 P2_Boat2a = check_in(P2_Boat2a)
 while P2_Boat2a == P2_Boat1a or P2_Boat2a == P2_Boat1b:
     P2_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
+    
+os.system('cls')
+row, col = convert_input(P2_Boat2a)
+grid[row][col] = 'X'
+display_grid(grid)
 
 P2_Boat2a, P2_Boat2b = pick_boat2(P2_Boat2a, P2_Boat2b, P2_Boat1a, P2_Boat1b)
+
+os.system('cls')
+row, col = convert_input(P2_Boat2b)
+grid[row][col] = 'X'
+display_grid(grid)
 
 os.system('cls' if os.name == 'nt' else 'clear') 
 print("Player 2 complete")
