@@ -65,9 +65,7 @@ def pick_boat2(BoatA, BoatB, BoatA1, BoatB1):
     return BoatA, BoatB
 
 def check_boat(boat):
-    while len(boat) != 2:
-        boat = (input("Please enter a valid position (a1 - e5): ")).lower()
-    while not boat[0] in "abcde" or not boat[1] in "12345":
+    while not boat[0] in "abcde" or not boat[1] in "12345" or len(boat) != 2:
         boat = (input("Please enter a valid position (a1 - e5): ")).lower()
     return boat
 #Gets the first position of the boat and makes sure it is valid
@@ -113,3 +111,4 @@ P2_Boat2a, P2_Boat2b = pick_boat2(P2_Boat2a, P2_Boat2b, P2_Boat1a, P2_Boat1b)
 
 os.system('cls' if os.name == 'nt' else 'clear') 
 print("Player 2 complete")
+
