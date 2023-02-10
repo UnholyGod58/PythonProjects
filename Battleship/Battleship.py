@@ -25,12 +25,21 @@ def convert_input(input_string):
     return row, col
 #takes the input from the user and converts it to a row and column number
 def Update_Grid(Position, Grid, Change):
-    global grid
     os.system('cls')
     row, col = convert_input(Position) #gets the row and column to dtermine what segement of the grid list and where in the list to place the boat
     Grid[row][col] = Change #takes the boat position and places it in the grid list
     display_grid(Grid) #displays the grid list
 #Updates the grid after user input
+def Update_Grid_player_AI(grid1, grid2, position, change):
+    os.system('cls')
+    row, col = convert_input(position)
+    grid1[row][col] = change
+    print('  1 2 3 4 5' + "   Player ------------ AI " + '   1 2 3 4 5')
+    print('a ' + ' '.join(grid1[0]) + "                           " + 'a ' + ' '.join(grid2[0]))
+    print('b ' + ' '.join(grid1[1]) + "                           " + 'b ' + ' '.join(grid2[1]))
+    print('c ' + ' '.join(grid1[2]) + "                           " + 'c ' + ' '.join(grid2[2]))
+    print('d ' + ' '.join(grid1[3]) + "                           " + 'd ' + ' '.join(grid2[3]))
+    print('e ' + ' '.join(grid1[4]) + "                           " + 'e ' + ' '.join(grid2[4]))
 def Boat_Direction(boat, direction1, direction2):
     if boat[0] == "a":
         direction1 = "b"
@@ -191,7 +200,7 @@ def Single_Player():
     AIScore = 0
     global Play
     
-    Boat1a, Boat1b, Boat2a, Boat2b = Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, "")
+    #Boat1a, Boat1b, Boat2a, Boat2b = Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, "")
     
     AIB1a = random.choice("abcde") + str(random.randrange(1,5))
     AIB1b = AI_Pick_Boat(AIB1a, AIB1b)
@@ -209,7 +218,9 @@ def Single_Player():
     for i in range(5):
         gridAI.append(['-' for i in range(5)])
         
-    Play = True
+    Update_Grid_player_AI(gridP, gridAI)
+        
+    Play = False
         
     while Play:
         gridP, PickB, Score = Player_Turn(gridP, Score, Boat1a, Boat1b, Boat2a, Boat2b, PickA, PickB, "", "AI")
@@ -225,7 +236,8 @@ def Single_Player():
                 AIPickA = random.choice("abcde") + str(random.randrange(1,5))
                 while AIPickA in AIPickB:
                     AIPickA = random.choice("abcde") + str(random.randrange(1,5))
-                AIPickB.append(AIPickA)
+                if not AIPickA in AIPickB:
+                    AIPickB.append(AIPickA)
             if AIPickA == Boat1a or AIPickA == Boat1b or AIPickA == Boat2a or AIPickA == Boat2b:
                 AIHits.append(AIPickA)
                 Update_Grid(AIPickA, gridAI, "X")
