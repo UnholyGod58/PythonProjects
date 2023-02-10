@@ -1,7 +1,8 @@
 #By : Joshua Hodder
 #Date started : 2023-02-08
 #V.1.0 finsihed : 2023-02-09
-#A Two Player Game Of Battleship
+#V.1.1 finished : 2023-02-10 - added AI
+#A Simple Game Of Battleship
 
 import os
 import msvcrt
@@ -45,7 +46,6 @@ def Boat_Direction(boat, direction1, direction2):
         direction1 = "c"
         direction2 = "e"
     return direction1, direction2
-
 def AI_Pick_Boat(Boata, Boatb):
     global Vaild_Position
     Direction1 = ""
@@ -300,7 +300,6 @@ def Multi_Player():
         else:
             print("Please enter 'y' or 'n'\nPress any key to try again")
             msvcrt.getch()
-
 #Code for Two Player Version
 def start():
     os.system('cls')
