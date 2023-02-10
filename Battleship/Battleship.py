@@ -6,25 +6,8 @@
 import os
 import msvcrt
 os.system('cls')
-print("Welcome to battleship\nPress any key to continue")
-msvcrt.getch() #waits for a keypress
-
-os.system('cls')
+Start_Try = False
 Vaild_Position = " "
-P1_Boat1b = ""
-P1_Boat2b = ""
-P2_Boat1b = ""
-P2_Boat2b = ""
-P1_Pickb = []
-P2_Pickb = []
-P1_Score = 0
-P2_Score = 0
-
-grid = []
-for i in range(5): # makes 5 sections to the grid list
-    grid.append(['-' for i in range(5)]) #adds 5 empty spaces to the grid list
-
-#sets up the grid
 
 def display_grid(grid):
     print('  1 2 3 4 5')
@@ -33,12 +16,19 @@ def display_grid(grid):
     print('c ' + ' '.join(grid[2]))
     print('d ' + ' '.join(grid[3]))
     print('e ' + ' '.join(grid[4]))
-
+#code for displaying the grid
 def convert_input(input_string):
     row = ord(input_string[0].upper()) - 65 # converts letter to number for row  (A -> 0 B-> 1 C-> 2 D-> 3 E-> 4)
     col = int(input_string[1]) - 1 # gets column number from 0 to 4
     return row, col
-
+#takes the input from the user and converts it to a row and column number
+def Update_Grid(Position, Grid, Change):
+    global grid
+    os.system('cls')
+    row, col = convert_input(Position) #gets the row and column to dtermine what segement of the grid list and where in the list to place the boat
+    Grid[row][col] = Change #takes the boat position and places it in the grid list
+    display_grid(Grid) #displays the grid list
+#Updates the grid after user input
 def pick_boat(Boata, Boatb):
     global Vaild_Position
     Position_1 = int(Boata[1]) - 1
@@ -82,181 +72,157 @@ def pick_boat(Boata, Boatb):
             Vaild_Position = [f"{Direction1}{Boata[1]}", f"{Boata[0]}{Position_1}", f"{Direction2}{Boata[1]}", f"{Boata[0]}{Position_2}"]
     #Next position for the boat in all other positions and checks if it is valid
     return Boata, Boatb
-
+#ensures that the first position of the boat is valid and stets up the second position of the boat
 def pick_boat2(BoatA, BoatB, BoatA1, BoatB1):
     BoatA, BoatB = pick_boat(BoatA, BoatB)
     while not BoatB in Vaild_Position:
         BoatB = (input("Please enter a valid position: ")).lower()
     while BoatB == BoatA1 or BoatB == BoatB1:
         BoatB = (input("That position is already in use. Please enter a valid position: ")).lower()
-    #ensures that the second position of the boat is valid
     return BoatA, BoatB
-
+#ensures that the second position of the boat is valid
 def check_in(boat):
-    while not boat[0] in "abcde" or not boat[1] in "12345" or len(boat) != 2:
+    while not (len(boat) == 2 and boat[0] in "abcde" and boat[1] in "12345"):
         boat = (input("Please enter a valid position (a1 - e5): ")).lower()
+        if not boat:
+            continue #Resets the loop
+        if len(boat) != 2:
+            continue
     return boat
-#Gets the first position of the boat and makes sure it is valid
-
-#player 1 placing first boat
-
-display_grid(grid)
-P1_Boat1a = (input("Player 1, Select boat position (a1 - e5): ")).lower()
-P1_Boat1a = check_in(P1_Boat1a)
-
-os.system('cls')
-row, col = convert_input(P1_Boat1a) #gets the row and column to dtermine what segement of the grid list and where in the list to place the boat
-grid[row][col] = 'X' #takes the boat position and places it in the grid list
-display_grid(grid) #displays the grid list
-
-P1_Boat1a, P1_Boat1b = pick_boat(P1_Boat1a, P1_Boat1b)
-
-while not P1_Boat1b in Vaild_Position:
-        P1_Boat1b = (input("Please enter a valid position: ")).lower()
-
-os.system('cls')
-row, col = convert_input(P1_Boat1b)
-grid[row][col] = 'X'
-display_grid(grid)
-
-#player 1 placing second boat
-
-P1_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
-
-P1_Boat2a = check_in(P1_Boat2a)
-while P1_Boat2a == P1_Boat1a or P1_Boat2a == P1_Boat1b:
-    P1_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
-
-os.system('cls')
-row, col = convert_input(P1_Boat2a)
-grid[row][col] = 'X'
-display_grid(grid)
-
-P1_Boat2a, P1_Boat2b = pick_boat2(P1_Boat2a, P1_Boat2b, P1_Boat1a, P1_Boat1b)
-
-os.system('cls')
-row, col = convert_input(P1_Boat2b)
-grid[row][col] = 'X'
-display_grid(grid)
-
-print("Player 1 complete, pass to player 2\nPress any key to continue")
-msvcrt.getch()
-
-#player 2 placing first boat
-
-os.system('cls') 
-
-grid = []
-for i in range(5):
-    grid.append(['-' for i in range(5)])
-display_grid(grid)
-#resets the grid
-
-P2_Boat1a = (input("Player 2, Select boat position (a1 - e5): ")).lower()
-P2_Boat1a = check_in(P2_Boat1a)
-
-os.system('cls')
-row, col = convert_input(P2_Boat1a)
-grid[row][col] = 'X'
-display_grid(grid)
-
-P2_Boat1a, P2_Boat1b = pick_boat(P2_Boat1a, P2_Boat1b)
-
-while not P2_Boat1b in Vaild_Position:
-    P2_Boat1b = (input("Please enter a valid position: ")).lower()
+#Ensures the imput is valid
+def Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, player):
+    grid = []
+    for i in range(5):
+        grid.append(['-' for i in range(5)])
+    global Vaild_Position
+    display_grid(grid)
+    Boat1a = (input(f"Player{player}, Select boat position (a1 - e5): ")).lower()
+    Boat1a = check_in(Boat1a)
+    Update_Grid(Boat1a, grid, "X")
+    Boat1a, Boat1b = pick_boat(Boat1a, Boat1b)
+    while not Boat1b in Vaild_Position:
+        Boat1b = (input("Please enter a valid position: ")).lower()
+    Update_Grid(Boat1b, grid, "X")
+    Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
+    Boat2a = check_in(Boat2a)
+    while Boat2a == Boat1a or Boat2a == Boat1b:
+        Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
+    Update_Grid(Boat2a, grid, "X")
+    Boat2a, Boat2b = pick_boat2(Boat2a, Boat2b, Boat1a, Boat1b)
+    Update_Grid(Boat2b, grid, "X")
+    print(f"Player{player} complete\nPress any key to continue")
+    msvcrt.getch()
+    os.system('cls') 
+    return Boat1a, Boat1b, Boat2a, Boat2b
+#Allowes the player to pick the boat's position
+def Player_Turn(grid, Score, B1a, B2a, B1b, B2b, Picka, Pickb, playerIt, playerNext):
+    global Play
     
-os.system('cls')
-row, col = convert_input(P2_Boat1b)
-grid[row][col] = 'X'
-display_grid(grid)
-
-#Player 2 placing second boat
-
-P2_Boat2a = (input("Select position of second boat (a1 - e5): ")).lower()
-P2_Boat2a = check_in(P2_Boat2a)
-while P2_Boat2a == P2_Boat1a or P2_Boat2a == P2_Boat1b:
-    P2_Boat2a = (input("That position is already in use. Please enter a valid position (a1 - e5): ")).lower()
-    
-os.system('cls')
-row, col = convert_input(P2_Boat2a)
-grid[row][col] = 'X'
-display_grid(grid)
-
-P2_Boat2a, P2_Boat2b = pick_boat2(P2_Boat2a, P2_Boat2b, P2_Boat1a, P2_Boat1b)
-
-os.system('cls')
-row, col = convert_input(P2_Boat2b)
-grid[row][col] = 'X'
-display_grid(grid)
-
-print("Player 2 complete\nPress any key to continue")
-msvcrt.getch()
-
-os.system('cls') 
-
-gridP1 = []
-for i in range(5):
-    gridP1.append(['-' for i in range(5)])
-gridP2 = []
-for i in range(5):
-    gridP2.append(['-' for i in range(5)])
-
-Play = True
-
-while Play:
-    display_grid(gridP1)
-    P1_Picka = input("Player 1, choose a position to shoot: ")
-    while  P1_Picka in P1_Pickb:
-        P1_Picka = input("You've already tired that, try again: ")
-    P1_Picka = check_in(P1_Picka)
-    P1_Pickb.append(P1_Picka) # tracks geussed positions
-    if P1_Picka == P2_Boat1a or P1_Picka == P2_Boat1b or P1_Picka == P2_Boat2a or P1_Picka == P2_Boat2b:
-        os.system('cls')
-        row, col = convert_input(P1_Picka)
-        gridP1[row][col] = 'X'
-        display_grid(gridP1)
-        print("Hit! Player 2's turn\npress any key to continue")
-        P1_Score += 1
-        if P1_Score == 4:
+    display_grid(grid)
+    Picka = input(f"Player {playerIt}, choose a position to shoot: ")
+    while  Picka in Pickb:
+        Picka = input("You've already tired that, try again: ")
+    Picka = check_in(Picka)
+    Pickb.append(Picka) # tracks geussed positions
+    if Picka == B1a or Picka == B1b or Picka == B2a or Picka == B2b:
+        Update_Grid(Picka, grid, "X")
+        print(f"Hit! Player {playerNext}'s turn\npress any key to continue")
+        Score += 1
+        if Score == 4:
             os.system('cls')
-            display_grid(gridP1)
+            display_grid(grid)
             Play = False
-            print("Player 1 Wins!\n Good Job")
+            print(f"Player {playerIt} Wins!\n Good Job")
         msvcrt.getch()
         os.system('cls') 
     else:
-        os.system('cls')
-        row, col = convert_input(P1_Picka)
-        gridP1[row][col] = 'O'
-        display_grid(gridP1)
-        print("Miss. Player 2's turn\npress any key to continue")
+        Update_Grid(Picka, grid, "O")
+        print(f"Miss. Player {playerNext}'s turn\npress any key to continue")
         msvcrt.getch()
         os.system('cls') 
-    display_grid(gridP2)
-    P2_Picka = input("Player 2, choose a position to shoot: ")
-    while  P2_Picka in P2_Pickb:
-        P2_Picka = input("You've already tired that, try again: ")
-    P2_Picka = check_in(P2_Picka)
-    P2_Pickb.append(P2_Picka)
-    if P2_Picka == P1_Boat1a or P2_Picka == P1_Boat1b or P2_Picka == P1_Boat2a or P2_Picka == P1_Boat2b:
-        os.system('cls')
-        row, col = convert_input(P2_Picka)
-        gridP2[row][col] = 'X'
-        display_grid(gridP2)
-        print("Hit! Player 1's turn\npress any key to continue")
-        P2_Score += 1
-        if P2_Score == 4:
-            os.system('cls')
-            display_grid(gridP2)
-            Play = False
-            print("Player 2 Wins!\n Good Job")
-        msvcrt.getch()
-        os.system('cls')
+    return grid, Pickb, Score
+#Player Gameplay
+def Multi_Player():
+    P1_Boat2a = ""
+    P1_Boat1a = ""
+    P2_Boat2a = ""
+    P2_Boat1a = ""
+    P1_Boat1b = ""
+    P1_Boat2b = ""
+    P2_Boat1b = ""
+    P2_Boat2b = ""
+    P1_Picka = ""
+    P2_Picka = ""
+    P1_Pickb = []
+    P2_Pickb = []
+    P1_Score = 0
+    P2_Score = 0
+    P1_Picka = ""
+    P2_Picka = ""
+    global Play
+    
+    P1_Boat1a, P1_Boat1b, P1_Boat2a, P1_Boat2b = Boat_Place(P1_Boat1a, P1_Boat1b, P1_Boat2a, P1_Boat2b, 1)
+    P2_Boat1a, P2_Boat1b, P2_Boat2a, P2_Boat2b = Boat_Place(P2_Boat1a, P2_Boat1b, P2_Boat2a, P2_Boat2b, 2)
+               
+    gridP1 = []
+    for i in range(5):
+        gridP1.append(['-' for i in range(5)])
+    gridP2 = []
+    for i in range(5):
+        gridP2.append(['-' for i in range(5)])
+        
+    Play = True
+
+    while Play:
+        gridP1, P1_Pickb, P1_Score = Player_Turn(gridP1, P1_Score, P2_Boat1a, P2_Boat2a, P2_Boat1b, P2_Boat2b, P1_Picka, P1_Pickb, 1, 2)
+        if Play:
+            gridP2, P2_Pickb, p2_Score = Player_Turn(gridP2, P2_Score, P1_Boat1a, P1_Boat2a, P1_Boat1b, P1_Boat2b, P2_Picka, P2_Pickb, 2, 1)
+    
+    while not Play:
+        Input = input("Would you like to restart [y/n]\n").lower
+        if Input == "y":
+            start()
+        elif Input == "n":
+            print("Thanks for playing!\nPress any key to exit")
+            msvcrt.getch()
+            exit()
+        else:
+            print("Please enter 'y' or 'n'\nPress any key to try again")
+            msvcrt.getch()
+            continue
+#Code for Two Player Version
+def start():
+    os.system('cls')
+    global Start_Try
+    if Start_Try:
+        print("Enter 1 to play with AI\nEnter 2 to play with another player")
     else:
-        os.system('cls')
-        row, col = convert_input(P2_Picka)
-        gridP2[row][col] = 'O'
-        display_grid(gridP2)
-        print("Miss. Player 1's turn\npress any key to continue")
+        print("Welcome to battleship\nEnter 1 to play with AI\nEnter 2 to play with another player")
+    Mode_Select = input()
+    try:
+        Mode_Select = int(input())
+    except ValueError:
+        print("Invalid input\nPress any key to continue and try again")
+        Start_Try = True
         msvcrt.getch()
-        os.system('cls') 
+        os.system('cls')
+        start()
+    if Mode_Select == 1:
+        os.system('cls')
+        print("Playing with AI\nPress any key to continue")
+        msvcrt.getch()
+        os.system('cls')
+    elif Mode_Select == 2:
+        os.system('cls')
+        print("Playing with another player\nPress any key to continue")
+        msvcrt.getch()
+        os.system('cls')
+        Multi_Player()
+    else:
+        print("Invalid input\nPress any key to continue and try again")
+        Start_Try = True
+        msvcrt.getch()
+        os.system('cls')
+        start()
+#Code for Starting the Game
+start()
