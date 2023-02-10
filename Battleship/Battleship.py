@@ -186,6 +186,7 @@ def Single_Player():
     AIPickA = ""
     PickB = []
     AIPickB = []
+    AIHits = []
     Score = 0
     AIScore = 0
     global Play
@@ -199,7 +200,7 @@ def Single_Player():
         AIB2a = random.choice("abcde") + str(random.randrange(1,5))
     AIB2b = AI_Pick_Boat(AIB2a, AIB2b)
     while AIB2b == AIB1a or AIB2b == AIB1b:
-        AIB2b = Vaild_Position[random.randrange(0, len(Vaild_Position))]
+        AIB2b = AI_Pick_Boat(AIB2a, AIB2b)
         
     gridP = []
     for i in range(5):
@@ -213,19 +214,20 @@ def Single_Player():
     while Play:
         gridP, PickB, Score = Player_Turn(gridP, Score, Boat1a, Boat1b, Boat2a, Boat2b, PickA, PickB, "", "AI")
         if Play:
-            if AIScore == 1 or AIScore == 3:
-                AIPickA = AI_Pick_Boat(AIPickB[-1], AIPickA)
-                AIPickB.append(AIPickA)
+            if len(AIHits) > 0:
+                AIPickA = AI_Pick_Boat(AIHits[-1], AIPickA)
+            if len(AIHits) == 1 or len(AIHits) == 3 and not all(item in AIPickB for item in Vaild_Position):
                 while AIPickA in AIPickB:
                     AIPickA = Vaild_Position[random.randrange(0, len(Vaild_Position))]
-                AIPickB.append(AIPickA)
+                if not AIPickA in AIPickB:
+                    AIPickB.append(AIPickA)
             else:
                 AIPickA = random.choice("abcde") + str(random.randrange(1,5))
-                AIPickB.append(AIPickA)
                 while AIPickA in AIPickB:
                     AIPickA = random.choice("abcde") + str(random.randrange(1,5))
                 AIPickB.append(AIPickA)
             if AIPickA == Boat1a or AIPickA == Boat1b or AIPickA == Boat2a or AIPickA == Boat2b:
+                AIHits.append(AIPickA)
                 Update_Grid(AIPickA, gridAI, "X")
                 AIScore += 1
                 print("AI Hit\nPress any key to continue")
@@ -237,15 +239,16 @@ def Single_Player():
                 msvcrt.getch()
                 os.system('cls')
             if AIScore == 4:
+                display_grid(gridAI)
                 print("AI Wins!\nPress any key to continue")
                 Play = False
                 msvcrt.getch()
                 os.system('cls')
     while not Play:
-        Input = input("Would you like to restart [y/n]\n").lower
-        if Input == "y":
+        Exit = input("Would you like to restart [y/n]: ").lower()
+        if Exit == "y":
             start()
-        elif Input == "n":
+        elif Exit == "n":
             print("Thanks for playing!\nPress any key to exit")
             msvcrt.getch()
             exit()
