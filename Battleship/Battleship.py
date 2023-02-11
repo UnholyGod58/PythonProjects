@@ -10,6 +10,11 @@ import random
 os.system('cls')
 Start_Try = False
 Vaild_Position = " "
+gridP = []
+gridAI = []
+gridP1 = []
+gridP2 = []
+playAI = False
 
 def display_grid(grid):
     print('  1 2 3 4 5')
@@ -19,6 +24,24 @@ def display_grid(grid):
     print('d ' + ' '.join(grid[3]))
     print('e ' + ' '.join(grid[4]))
 #code for displaying the grid
+def display_grid_AI():
+    global gridP
+    global gridAI
+    print('  1 2 3 4 5' + "   Player ------------ AI " + '   1 2 3 4 5')
+    print('a ' + ' '.join(gridP[0]) + "                           " + 'a ' + ' '.join(gridAI[0]))
+    print('b ' + ' '.join(gridP[1]) + "                           " + 'b ' + ' '.join(gridAI[1]))
+    print('c ' + ' '.join(gridP[2]) + "                           " + 'c ' + ' '.join(gridAI[2]))
+    print('d ' + ' '.join(gridP[3]) + "                           " + 'd ' + ' '.join(gridAI[3]))
+    print('e ' + ' '.join(gridP[4]) + "                           " + 'e ' + ' '.join(gridAI[4]))
+def display_grid_Player():
+    global gridP1
+    global gridP2
+    print('  1 2 3 4 5' + "   Player1 -------Player2 " + '   1 2 3 4 5')
+    print('a ' + ' '.join(gridP1[0]) + "                           " + 'a ' + ' '.join(gridP2[0]))
+    print('b ' + ' '.join(gridP1[1]) + "                           " + 'b ' + ' '.join(gridP2[1]))
+    print('c ' + ' '.join(gridP1[2]) + "                           " + 'c ' + ' '.join(gridP2[2]))
+    print('d ' + ' '.join(gridP1[3]) + "                           " + 'd ' + ' '.join(gridP2[3]))
+    print('e ' + ' '.join(gridP1[4]) + "                           " + 'e ' + ' '.join(gridP2[4]))
 def convert_input(input_string):
     row = ord(input_string[0].upper()) - 65 # converts letter to number for row  (A -> 0 B-> 1 C-> 2 D-> 3 E-> 4)
     col = int(input_string[1]) - 1 # gets column number from 0 to 4
@@ -30,16 +53,16 @@ def Update_Grid(Position, Grid, Change):
     Grid[row][col] = Change #takes the boat position and places it in the grid list
     display_grid(Grid) #displays the grid list
 #Updates the grid after user input
-def Update_Grid_player_AI(grid1, grid2, position, change):
+def Update_Grid_player_AI(position, change, grid):
     os.system('cls')
     row, col = convert_input(position)
-    grid1[row][col] = change
-    print('  1 2 3 4 5' + "   Player ------------ AI " + '   1 2 3 4 5')
-    print('a ' + ' '.join(grid1[0]) + "                           " + 'a ' + ' '.join(grid2[0]))
-    print('b ' + ' '.join(grid1[1]) + "                           " + 'b ' + ' '.join(grid2[1]))
-    print('c ' + ' '.join(grid1[2]) + "                           " + 'c ' + ' '.join(grid2[2]))
-    print('d ' + ' '.join(grid1[3]) + "                           " + 'd ' + ' '.join(grid2[3]))
-    print('e ' + ' '.join(grid1[4]) + "                           " + 'e ' + ' '.join(grid2[4]))
+    grid[row][col] = change
+    display_grid_AI()
+def Update_Grid_player(position, change, grid):
+    os.system('cls')
+    row, col = convert_input(position)
+    grid[row][col] = change
+    display_grid_Player()
 def Boat_Direction(boat, direction1, direction2):
     if boat[0] == "a":
         direction1 = "b"
@@ -157,26 +180,39 @@ def Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, player):
 #Allowes the player to pick the boat's position
 def Player_Turn(grid, Score, B1a, B2a, B1b, B2b, Picka, Pickb, playerIt, playerNext):
     global Play
-    
-    display_grid(grid)
+    global playAI
+    global gridP
+    if playAI: 
+        display_grid_AI()
+    else:
+        display_grid_Player() 
     Picka = input(f"Player {playerIt}, choose a position to shoot: ")
     while  Picka in Pickb:
         Picka = input("You've already tired that, try again: ")
     Picka = check_in(Picka)
     Pickb.append(Picka) # tracks geussed positions
     if Picka == B1a or Picka == B1b or Picka == B2a or Picka == B2b:
-        Update_Grid(Picka, grid, "X")
+        if playAI:
+            Update_Grid_player_AI(Picka, "x", gridP)
+        else:
+            Update_Grid_player(Picka, "X", grid)
         print(f"Hit! Player {playerNext}'s turn\npress any key to continue")
         Score += 1
         if Score == 4:
             os.system('cls')
-            display_grid(grid)
+            if playAI:
+                display_grid_AI()
+            else:
+                display_grid_Player()
             Play = False
-            print(f"Player {playerIt} Wins!\n Good Job")
+            print(f"Player {playerIt} Wins! Good Job\nPress any key to continue")
         msvcrt.getch()
         os.system('cls') 
     else:
-        Update_Grid(Picka, grid, "O")
+        if playAI:
+            Update_Grid_player_AI(Picka, "O", gridP)
+        else:
+            Update_Grid_player(Picka, "O", grid)
         print(f"Miss. Player {playerNext}'s turn\npress any key to continue")
         msvcrt.getch()
         os.system('cls') 
@@ -199,8 +235,18 @@ def Single_Player():
     Score = 0
     AIScore = 0
     global Play
+    global gridAI
+    global gridP
+    global playAI
+    playAI = True
+    gridP = []
+    for i in range(5):
+        gridP.append(['-' for i in range(5)])
+    gridAI = []
+    for i in range(5):
+        gridAI.append(['-' for i in range(5)])
     
-    #Boat1a, Boat1b, Boat2a, Boat2b = Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, "")
+    Boat1a, Boat1b, Boat2a, Boat2b = Boat_Place(Boat1a, Boat1b, Boat2a, Boat2b, "")
     
     AIB1a = random.choice("abcde") + str(random.randrange(1,5))
     AIB1b = AI_Pick_Boat(AIB1a, AIB1b)
@@ -211,16 +257,7 @@ def Single_Player():
     while AIB2b == AIB1a or AIB2b == AIB1b:
         AIB2b = AI_Pick_Boat(AIB2a, AIB2b)
         
-    gridP = []
-    for i in range(5):
-        gridP.append(['-' for i in range(5)])
-    gridAI = []
-    for i in range(5):
-        gridAI.append(['-' for i in range(5)])
-        
-    Update_Grid_player_AI(gridP, gridAI)
-        
-    Play = False
+    Play = True
         
     while Play:
         gridP, PickB, Score = Player_Turn(gridP, Score, Boat1a, Boat1b, Boat2a, Boat2b, PickA, PickB, "", "AI")
@@ -240,18 +277,18 @@ def Single_Player():
                     AIPickB.append(AIPickA)
             if AIPickA == Boat1a or AIPickA == Boat1b or AIPickA == Boat2a or AIPickA == Boat2b:
                 AIHits.append(AIPickA)
-                Update_Grid(AIPickA, gridAI, "X")
+                Update_Grid_player_AI(AIPickA, "X", gridAI)
                 AIScore += 1
                 print("AI Hit\nPress any key to continue")
                 msvcrt.getch()
                 os.system('cls')
             else:
-                Update_Grid(AIPickA, gridAI, "O")
+                Update_Grid_player_AI(AIPickA, "O", gridAI)
                 print("AI Missed\nPress any key to continue")
                 msvcrt.getch()
                 os.system('cls')
             if AIScore == 4:
-                display_grid(gridAI)
+                display_grid_AI()
                 print("AI Wins!\nPress any key to continue")
                 Play = False
                 msvcrt.getch()
@@ -283,6 +320,8 @@ def Multi_Player():
     P1_Score = 0
     P2_Score = 0
     global Play
+    global gridP1
+    global gridP2
     
     P1_Boat1a, P1_Boat1b, P1_Boat2a, P1_Boat2b = Boat_Place(P1_Boat1a, P1_Boat1b, P1_Boat2a, P1_Boat2b, 1)
     P2_Boat1a, P2_Boat1b, P2_Boat2a, P2_Boat2b = Boat_Place(P2_Boat1a, P2_Boat1b, P2_Boat2a, P2_Boat2b, 2)
