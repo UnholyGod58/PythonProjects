@@ -157,8 +157,9 @@ def add_grade():
     else:
         print("That Student Cannot be Found\nWould You Like to Try Again?[y/n]")
         while True: 
-            Input = input().lower()
-            if Input == "y":
+            choice = input().lower()
+            if choice == "y":
+                os.system("cls")
                 add_grade()
                 break
             elif choice == "n":
