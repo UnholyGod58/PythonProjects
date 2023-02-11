@@ -1,6 +1,7 @@
 #Joshua Hooder
-#Started 02-10-2023
+#Started 10-02-2023
 #Simple Program to Enter and Check Student Grades
+#[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
 
 import os
 os.system("cls")
@@ -23,9 +24,11 @@ def add_student(name):
             os.system("cls")
             print(f"Please Chose one of the Following\n{choices}")
             choice_input()
+            break
         elif choice == 2:
             os.system("cls")
             try_add_student()
+            break
         elif choice == 3:
             os.system("cls")
             exit("Program Closed")
@@ -52,11 +55,13 @@ def try_add_student():
                 if choice == 1:
                     student_name = ""
                     try_add_student()
+                    break
                 elif choice == 2:
                     student_name = ""
                     os.system("cls")
                     print(f"Slect One of The following\n{choices}")
                     choice_input()
+                    break
                 elif choice == 3:
                     os.system("cls")
                     exit("Program Closed")
@@ -81,16 +86,17 @@ def try_add_student():
                         if choice == 1:
                             os.system("cls")
                             try_add_student()
+                            break
                         elif choice == 2:
                             os.system("cls")
                             print(f"Please Chose one of the Following\n{choices}")
                             choice_input()
+                            break
                         elif choice == 3:
                             os.system("cls")
                             exit("Program Closed")
                         else:
                             print("Enter a Vaild Option:")
-                    break
                 else: 
                     print("Enter 'y' or 'n'")
         else:
@@ -102,6 +108,7 @@ def try_add_student():
             else:
                 add_student(student_name)
 def add_grade():
+    global student_list
     for sublist in student_list:
         check_list = sublist
     print("Which Student Woud you Like to Grade:")
@@ -110,15 +117,75 @@ def add_grade():
             choice = choice[:-1]
     while choice[0] == " ":
             choice = choice[1:]
-    
-    if choice in check_list and choice.isalpha() and choice.isspace():
+    choice = choice.replace(" ", "_")
+    if choice in check_list and choice.replace("_", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
         for i, sublist in enumerate(student_list):
           if choice in sublist:
               index = i
               break
-        student_list[index].append
+        print("What Grade Would You Like to Add (0-100):")
+        while True:
+            try:
+                grade = '{0:.2f}'.format(float(input()))
+            except:
+                print("Enter a Vaild Number (Ex: '45.63')")
+                continue
+            student_list[index].append(grade)
+            os.system("cls")
+            print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
+            print("What Would You Like to do:\n1: Add Another Grade\n2: Return to the Menu\n3: Exit")
+            while True:
+                try:
+                    choice = int(input())
+                except:
+                    print("Enter a Vaild Option:")
+                    continue
+                if choice == 1:
+                    os.system("cls")
+                    add_grade()
+                    break
+                elif choice == 2:
+                    os.system("cls")
+                    print(f"Please Chose one of the Following\n{choices}")
+                    choice_input()
+                    break
+                elif choice == 3:
+                    os.system("cls")
+                    exit("Program Closed")
+                else:
+                    print("Enter a Vaild Option:")
     else:
-        print("Failed")
+        print("That Student Cannot be Found\nWould You Like to Try Again?[y/n]")
+        while True: 
+            Input = input().lower()
+            if Input == "y":
+                add_grade()
+                break
+            elif choice == "n":
+                os.system("cls")
+                print("What Would You Like to do:\n1: Add a Student\n2: Return to the Menu\n3: Exit")
+                while True:
+                    try:
+                        choice = int(input())
+                    except:
+                        print("Enter a Vaild Option:")
+                        continue
+                    if choice == 1:
+                        os.system("cls")
+                        try_add_student()
+                        break
+                    elif choice == 2:
+                        os.system("cls")
+                        print(f"Please Chose one of the Following\n{choices}")
+                        choice_input()
+                        break
+                    elif choice == 3:
+                        os.system("cls")
+                        exit("Program Closed")
+                    else:
+                        print("Enter a Vaild Option:")
+            else: 
+                print("Enter 'y' or 'n'")
 def student_add():
     print("What Would You Like to do?\n1: Add a Student\n2: Add a Grade to a Student\n3: Return to the Menu")
     while True:
@@ -164,7 +231,7 @@ def choice_input():
             break
         elif choice == 5:
             os.system("cls")
-            break
+            exit("Program Closed")
         else:
             print("Please Enter a Vaild Option:")
 def program_start():
