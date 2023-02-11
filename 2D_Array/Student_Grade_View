@@ -1,0 +1,132 @@
+#Joshua Hooder
+#Started 02-10-2023
+#Simple Program to Enter and Check Student Grades
+
+import os
+os.system("cls")
+student_list = [[0]] #0 prevents chrash when adding the furst student
+choices = "1: Add to a Student\n2: List off Student's or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit" #Saves me from typing this every time
+
+def add_student(name):
+    global student_list
+    os.system("cls")
+    print("Student Added to the List")
+    student_list.append([name])
+    print("What Would you like to\n1: Return to the Menu\n2: Add Another Student\n3: Exit")
+    while True:
+        try:
+            choice = int(input())
+        except:
+            print("Enter a Valid Option:")
+            continue
+        if choice == 1:
+            os.system("cls")
+            print(f"Please Chose one of the Following\n{choices}")
+            choice_input()
+        elif choice == 2:
+            os.system("cls")
+            try_add_student()
+        elif choice == 3:
+            os.system("cls")
+            exit("Program Closed")
+        else:
+            print("Enter a Valid Option:")
+def try_add_student():
+    for sublist in student_list:
+        list_check = str(sublist)
+    print("Please Enter Student's Name:")
+    while True:
+        student_name = input().lower()
+        if not list_check == "" and student_name in list_check:
+            print("That Student Already Exists\n1: Try Again\n2: Return to the Menu\n3: Exit")
+            while student_name in list_check:
+                try:
+                    choice = int(input())
+                except:
+                    print("Enter a Vaild Option:")
+                    continue
+                if choice == 1:
+                    student_name = ""
+                    try_add_student()
+                elif choice == 2:
+                    student_name = ""
+                    os.system("cls")
+                    print(f"Slect One of The following\n{choices}")
+                    choice_input()
+                elif choice == 3:
+                    os.system("cls")
+                    exit("Program Closed")
+                else:
+                    print("Enter a vaild Option:")
+        if not student_name.isalpha() and not student_name.isspace():
+            os.system("cls")
+            print("A Name Should Only be Letters\nEnter Student's Name:")
+            continue
+        elif not student_name.isspace():
+            print("You Are Not Entering a Last Name\n Are You Sure You Want to Continue?[y/n]")
+            while True: 
+                choice = input().lower()
+                if choice == "y":
+                    add_student(student_name)
+                    break
+                elif choice == "n":
+                    os.system("cls")
+                    try_add_student()
+                    break
+                else: 
+                    print("Enter 'y' or 'n'")
+        else:
+            add_student(student_name)
+def add_grade():
+    print("Enter")
+def student_add():
+    print("What Would You Like to do?\n1: Add a Student\n2: Add a Grade to a Student\n3: Return to the Menu")
+    while True:
+        try:
+            choice = int(input())
+        except:
+            print("Enter a Vaild Option:")
+            continue
+        if choice == 1:
+            os.system("cls")
+            try_add_student()
+            break
+        elif choice == 2:
+            os.system("cls")
+            break
+        elif choice == 3:
+            os.system("cls")
+            print(f"Please Chose one of the Following\n{choices}")
+            choice_input()
+            break
+        else:
+            print("Enter a Vaild Option:")
+def choice_input():
+    while True:
+        try:
+            choice = int(input())
+        except:
+            print("Enter a Vaild Option:")
+            continue
+        if choice == 1:
+            os.system("cls")
+            student_add()
+            break
+        elif choice == 2:
+            os.system("cls")
+            break
+        elif choice == 3:
+            os.system("cls")
+            break
+        elif choice == 4:
+            os.system("cls")
+            break
+        elif choice == 5:
+            os.system("cls")
+            break
+        else:
+            print("Please Enter a Vaild Option:")
+def program_start():
+    print(f"Welcome, please select one of the following options\n{choices}")
+    choice_input()
+program_start()
