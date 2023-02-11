@@ -89,14 +89,14 @@ def try_add_student():
                     break
                 else: 
                     print("Enter 'y' or 'n'")
+        else:
+            student_name = student_name.replace(" ", "_")
+            if not student_name.isalpha:
+                os.system("cls")
+                print("Student's Name Should Only Contain Letters and Spacre\nEnter Student's Name:")
+                continue
             else:
-                student_name = student_name.replace(" ", "_")
-                if not student_name.isalpha:
-                    os.system("cls")
-                    print("Student's Name Should Only Contain Letters and Spacre\nEnter Student's Name:")
-                    continue
-                else:
-                    add_student(student_name)
+                add_student(student_name)
 def add_grade():
     for sublist in student_list:
         check_list = sublist
