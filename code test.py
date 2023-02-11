@@ -1,10 +1,22 @@
 
-values = [["test", "test2"], ["check", "check2"], ["final", "final2"]]
+values = [["user", 1.4, 2], ["user2", 2.4, 3.6], ["user3", 3, 4]]
 string = "test 1space  2paces   3spaces"
 
+user_in = 1
 
-for i in values:
-    print(i[0])
+#index = 0
+#while index < len(values[user_in]):
+#    if isinstance(values[user_in][index], float):
+#        print(values[user_in][index])
+#    index += 1 
+#improved version 
+#for value in values[user_in][1:]:
+#    if isinstance(value, float):
+#        print(value)
+    
+
+#for i in values[1:]:
+#    print(i[0])
 
 
 #for sublist in values:

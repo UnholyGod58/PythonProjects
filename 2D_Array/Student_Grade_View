@@ -2,14 +2,16 @@
 #Started 10-02-2023
 #Simple Program to Enter and Check Student Grades
 #[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
-#Listen Time: 04:27:24
+#Listen Time: 05:08:07
 
 import os
 import re
 os.system("cls")
-student_list = [[0]] #0 prevents chrash when adding the first student
-choices = "1: Add to a Student\n2: List off Student's or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit" #Saves me from typing this every time
 
+with open("student_list.txt", "r") as file:
+    content = file.read()
+    student_list = []
+    print(content)
 def input_convert(choice):
     choice = re.sub(' +', ' ', choice)
     while choice[-1] == " ":
@@ -39,22 +41,88 @@ def sub_choice(option1, option1_result, option2, option2_result):
             break
         else:
             print("Enter a Vaild Option:")
+def no_students():
+    print("You Have No Students...\n1: Add a Student\n2:Return to the Menu")
+    while True:
+        try:
+            choice = int(input())
+        except:
+            print("Enter a Vaild Option:")
+            continue
+        if choice == 1:
+            os.system("cls")
+            try_add_student()
+            break
+        elif choice == 2:
+            os.system("cls")
+            choice_input()
+            break
+        else:
+            print("Enter a Vaild Option:")
 def list_students():
-    global student_list
-    print("These are the Students:")
-    
+    if len(student_list) >= 2:
+        print("These are the Students:")
+        for i in student_list[1:]:
+            print(str(i[0]).replace("_", " "))
+        input("\nPress Enter to Continue")
+        os.system("cls")
+        sub_choice("View Student's Grades", list_grades, "Add Student", try_add_student)
+    else:
+        no_students
+def list_grades():
+    if len(student_list) >= 2:
+        print("Which Student's Grades do you want to see:")
+        list_index = input().lower()
+        while len(list_index) == 0 or list_index.isspace():
+            os.system("cls")
+            print("Do Not Leave the Input Blank\nEnter the Student's Name:")
+            list_index = input().lower()
+        list_index = list_index.replace(" ", "_")
+        if not list_index.replace("_", "").isalpha:
+            os.system("cls")
+            print("Student Not Found-")
+            sub_choice("Try Again", list_grades, "Add a Student", try_add_student)
+        found = False
+        for i in range(len(student_list)):
+            for j in range(len(student_list[i])):
+                if student_list[i][j] == list_index:
+                    list_index = i
+                    found = True
+                    break
+            if found:
+                break
+        if found:
+            if student_list[list_index] != 0:
+                os.system("cls")
+                print("Student's Grades:")
+                for i in student_list[list_index][1:]:
+                    if isinstance(i, float):
+                        print(i)
+                input("Press Any Key to Continue")
+                os.system("cls")
+                sub_choice("Add Another Grade", add_grade, "Add a Student", try_add_student)
+            else:
+                os.system("cls")
+                print("Student has No Grades")
+                sub_choice("Add a Grade", add_grade, "Add a Student", try_add_student)
+    else:
+        no_students
 def add_student(name):
     global student_list
     os.system("cls")
     print(f"Student, {name.replace('_', ' ')},Added to the List")
     student_list.append([name])
-    sub_choice("Add Another Student", try_add_student, "Add to a Student", add_grade)
+    sub_choice("Add Another Student", try_add_student, "Add a Grade to a Student", add_grade)
 def try_add_student():
     for sublist in student_list:
         list_check = str(sublist)
     print("Please Enter Student's Name:")
     while True:
         student_name = input().lower()
+        while len(student_name) == 0 or student_name.isspace():
+            os.system("cls")
+            print("Do Not Leave Space Blank\nEnter Student's Name:")
+            student_name = input().lower()
         student_name = input_convert(student_name)
         if student_name.replace(" ", "_") in list_check:
             os.system("cls")
@@ -84,44 +152,51 @@ def try_add_student():
                 add_student(student_name)
 def add_grade():
     global student_list
-    for sublist in student_list:
-        check_list = sublist
-    print("Which Student Woud you Like to Grade:")
-    choice = input().lower()
-    choice = input_convert(choice)
-    if choice in check_list and choice.replace("_", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
-        for i, sublist in enumerate(student_list):
-          if choice in sublist:
-              index = i
-              break
-        print("What Grade Would You Like to Add (0-100):")
-        while True:
-            try:
-                grade = '{0:.2f}'.format(float(input()))
-            except:
-                print("Enter a Vaild Number (Ex: '45.63')")
-                continue
-            student_list[index].append(grade)
+    if len(student_list) >= 2:
+        for sublist in student_list:
+            check_list = sublist
+        print("Which Student Woud you Like to Grade:")
+        choice = input().lower()
+        while len(choice) == 0 or choice.isspace():
             os.system("cls")
-            print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
-            sub_choice("Add Another Grade", add_grade, "List Student's Grades", add_grade)
-    else:
-        print("That Student Cannot be Found\nWould You Like to Try Again?[y/n]")
-        while True: 
+            print("Do Not Leave Space Blank\nWhich Student Woud you Like to Grade:")
             choice = input().lower()
-            if choice == "y":
-                os.system("cls")
-                add_grade()
+        choice = input_convert(choice)
+        if choice in check_list and choice.replace("_", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
+            for i, sublist in enumerate(student_list):
+                if choice in sublist:
+                    index = i
                 break
-            elif choice == "n":
+            print("What Grade Would You Like to Add (0-100):")
+            while True:
+                try:
+                    grade = '{0:.2f}'.format(float(input()))
+                except:
+                    print("Enter a Vaild Number (Ex: '45.63')")
+                    continue
+                student_list[index].append(grade)
                 os.system("cls")
-                print("What Would You Like to do:\n1: Add a Student\n2: Return to the Menu\n3: Exit")
-                sub_choice("Add a Student", try_add_student, "List Students", add_grade)
-            else: 
-                print("Enter 'y' or 'n'")
+                print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
+                sub_choice("Add Another Grade", add_grade, "List Student's Grades", add_grade)
+        else:
+            print("That Student Cannot be Found\nWould You Like to Try Again?[y/n]")
+            while True: 
+                choice = input().lower()
+                if choice == "y":
+                    os.system("cls")
+                    add_grade()
+                    break
+                elif choice == "n":
+                    os.system("cls")
+                    print("What Would You Like to do:\n1: Add a Student\n2: Return to the Menu\n3: Exit")
+                    sub_choice("Add a Student", try_add_student, "List Students", add_grade)
+                else: 
+                    print("Enter 'y' or 'n'")
+    else: 
+        no_students()
 def choice_input():
     while True:
-        print(f"Please Chose one of the Following\n{choices}")
+        print(f"Please Chose one of the Following\n1: Add to a Student\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5")
         try:
             choice = int(input())
         except:
@@ -133,6 +208,7 @@ def choice_input():
             break
         elif choice == 2:
             os.system("cls")
+            sub_choice("List Students", list_students, "List Student's Grades", list_grades)
             break
         elif choice == 3:
             os.system("cls")
