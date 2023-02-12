@@ -9,19 +9,38 @@ user_in = 1
 #    if isinstance(values[user_in][index], float):
 #        print(values[user_in][index])
 #    index += 1 
+
 #improved version 
 #for value in values[user_in][1:]:
 #    if isinstance(value, float):
 #        print(value)
     
+#if "user" in values:
+#    print("it sees all") - not how sublists work
 
-#for i in values[1:]:
-#    print(i[0])
+#for i in values:
+#    if "user" in i:
+#        print("works")
+
+#sum = 0.0
+#count = 0.0
+#for i in values[1]:
+#    if isinstance(i, float):
+#       sum += i
+#       count += 1
+#print(sum/count)
 
 
 #for sublist in values:
 #    if "check2" in sublist:
 #      print("it works")
+
+
+#for i in values[1][1:]:
+#        print(i)
+
+#for i in values[1:]:
+#    print(i[0])
 
 
 #for index, sublist in enumerate(values):
