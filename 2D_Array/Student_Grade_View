@@ -8,6 +8,7 @@ import os
 import re
 os.system("cls")
 student_list = [[0]]
+print("Welcome")
 
 def sub_choice(option1, option1_result, option2, option2_result):
     print(f"What Would You Like to do?\n1: {option1}\n2: {option2}\n3: Return to the Menu")
@@ -84,7 +85,11 @@ def student_average():
         student = student_input_check(student)
         if not student.replace("_", "").isalpha:
             student_not_found(student_average)
-        
+        for i in student_list:
+            if student in i:
+                print()
+            else:
+                student_not_found(student_average)
     else:
         no_students()
 def list_students():
@@ -158,6 +163,7 @@ def try_add_student():
                     break
                 else: 
                     print("Enter 'y' or 'n'")
+            break
         else:
             student_name = student_name.replace(" ", "_")
             if not student_name.replace("_", "").isalpha():
@@ -190,13 +196,14 @@ def add_grade():
                 os.system("cls")
                 print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
                 sub_choice("Add Another Grade", add_grade, "List Student's Grades", add_grade)
+                break
         else:
             student_not_found(add_grade)
     else: 
         no_students()
 def choice_input():
     while True:
-        print(f"Please Chose one of the Following\n1: Add to a Student\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5")
+        print(f"Please Chose one of the Following\n1: Add to a Student\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit")
         try:
             choice = int(input())
         except:
@@ -221,7 +228,4 @@ def choice_input():
             exit("Program Closed")
         else:
             print("Please Enter a Vaild Option:")
-def program_start():
-    print("Welcome")
-    choice_input()
-program_start()
+choice_input()
