@@ -80,17 +80,30 @@ def student_input_check(student):
     return student
 def student_average():
     if len(student_list) >= 2:
-        print("Which Student's Grades do you want to see:")
+        print(student_list)
+        print("Which Student's Average do You Want to See:")
         student = input().lower()
         student = student_input_check(student)
-        if not student.replace("_", "").isalpha:
+        print(student)
+        input()
+        if not student.replace("_", "").isalpha():
             student_not_found(student_average)
         for i in student_list:
             if student in i:
-                print()
+                for i in student_list[1:]: 
+                    if student_list[i][0] == student:
+                        student = i
+                    sum = 0
+                    count = 0
+                    for i in student_list[student]:
+                        if isinstance(i, float):
+                            sum += i
+                            count += 1
+                    print(f"Student's Average is:\n{'{0:.2f}'.format(sum/count)}")
+                    input("Press Enter to Continue") 
+                    sub_choice("Try Again", student_average, "Add a Grade", add_grade)
             else:
                 student_not_found(student_average)
-    else:
         no_students()
 def list_students():
     if len(student_list) >= 2:
@@ -104,34 +117,30 @@ def list_students():
         no_students
 def list_grades():
     if len(student_list) >= 2:
-        print("Which Student's Grades do you want to see:")
-        student = input().lower()
-        student = student_input_check(student)
-        if not student.replace("_", "").isalpha:
+        print("Which Student's Grades do You Want to See:")
+        student = student_input_check(input().lower())
+        if not student.replace("_", "").isalpha():
             student_not_found(list_grades)
-        for i in student_list:
-            if student in i:         
-                for i in student_list[1:]: # i = position in student_list
-                    if student_list[i][0] == student: # checks if the first spot in the sublist is the student
-                        student = i # allows us to index what sublist the student is in
-                        if len(student_list[student]) != 0:
-                            os.system("cls")
-                            print("Student's Grades:")
-                            for i in student_list[student][1:]:
-                                print(i)
-                            input("Press Any Key to Continue")
-                            os.system("cls")
-                            sub_choice("Add Another Grade", add_grade, "Add a Student", try_add_student)
-                        else:
-                            os.system("cls")
-                            print("Student has No Grades")
-                            sub_choice("Add a Grade", add_grade, "Add a Student", try_add_student)
+        for i, sublist in enumerate(student_list):
+            if student in sublist:   
+                if len(student_list[i]) != 0:
+                    os.system("cls")
+                    print("Student's Grades:")
+                    for i in student_list[i][1:]:
+                        print(i)
+                    input("Press Any Key to Continue")
+                    os.system("cls")
+                    sub_choice("Add Another Grade", add_grade, "Add a Student", try_add_student)
                     break
-            else:
-                student_not_found(list_grades)
-            break
+                else:
+                    os.system("cls")
+                    print("Student has No Grades")
+                    sub_choice("Add a Grade", add_grade, "Add a Student", try_add_student)
+                    break
+        else:
+            student_not_found(list_grades)
     else:
-        no_students
+        no_students()
 def add_student(name):
     global student_list
     student_list.append([name])
@@ -156,7 +165,6 @@ def try_add_student():
                 choice = input().lower()
                 if choice == "y":
                     add_student(student_name)
-                    break
                 elif choice == "n":
                     os.system("cls")
                     sub_choice("Try Again", try_add_student, "List Students", add_grade)
@@ -175,27 +183,35 @@ def try_add_student():
 def add_grade():
     global student_list
     if len(student_list) >= 2:
-        for sublist in student_list:
-            check_list = sublist
+        check_list = [sublist[0] for sublist in student_list]
         print("Which Student Woud you Like to Grade:")
-        choice = input().lower()
-        choice = student_input_check(choice)
+        choice = student_input_check(input().lower())
         if choice in check_list and choice.replace("_", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
             for i, sublist in enumerate(student_list):
                 if choice in sublist:
                     index = i
                     break
             print("What Grade Would You Like to Add (0-100):")
+            try_count = 0
             while True:
+                try_count += 1
+                if try_count == 10:
+                    os.system("cls")
+                    print("You Have Tried to Add a Grade 10 Times, Go Think About Your Actions")
+                    choice_input()
+                    break
                 try:
                     grade = '{0:.2f}'.format(float(input()))
+                    if grade < 0 or grade > 100:
+                        print("Enter a Grade From 0-100")
+                        continue  
                 except:
-                    print("Enter a Vaild Number (Ex: '45.63')")
+                    print("Enter a Grade From 0-100")
                     continue
                 student_list[index].append(grade)
                 os.system("cls")
                 print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
-                sub_choice("Add Another Grade", add_grade, "List Student's Grades", add_grade)
+                sub_choice("Add Another Grade", add_grade, "List Student's Grades", list_grades)
                 break
         else:
             student_not_found(add_grade)
@@ -219,6 +235,7 @@ def choice_input():
             break
         elif choice == 3:
             os.system("cls")
+            student_average()
             break
         elif choice == 4:
             os.system("cls")
