@@ -2,7 +2,7 @@
 #Started 10-02-2023
 #Simple Program to Enter and Check Student Grades
 #[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
-#Listen Time: 09:030:08
+#Listen Time: 09:30:08
 
 import os, re, pickle
 os.system("cls")
@@ -186,17 +186,16 @@ def add_student(name):
     print(f"Student, {name.replace('_', ' ')},Added to the List")
     sub_choice("Add Another Student", try_add_student, "Add a Grade to a Student", add_grade)
 def try_add_student():
-    for sublist in student_list:
-        list_check = str(sublist)
     print("Please Enter Student's Name:")
     while True:
         student_name = input().lower()
         student_name = student_input_check(student_name)
-        if student_name.replace(" ", "_") in student_list:
-            os.system("cls")
-            print("That Student Already Exists")
-            sub_choice("Try Again", try_add_student, "List Students", add_grade)
-            break
+        for sublist in student_list:
+            if student_name in sublist:
+                os.system("cls")
+                print("That Student Already Exists")
+                sub_choice("Try Again", try_add_student, "List Students", add_grade)
+                break
         if student_name.isalpha():
             print("You Are Not Entering a Last Name\n Are You Sure You Want to Continue?[y/n]")
             while True: 
@@ -253,11 +252,50 @@ def add_grade():
             student_not_found(add_grade)
     else: 
         no_students()
+#def remove_grade():
+    if len(student_list) != 0:
+        print("Who's Grade Would You Like to Remove")
+        student = input().lower()
+        student = student_input_check(student)
+        for i in student_list:
+            if student in i:
+                for i, sublist in enumerate(student_list):
+                    print("What Grade Would You Like to Remove")
+                    if student in sublist:
+                        grade = input()
+                        if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
+                            grade = '{0:.2f}'.format(float(grade))
+                            if grade in student_list[i]:
+                                student_list[i].remove(grade)
+                                with open("2d_Array\student_list.bin", "wb") as output:
+                                    pickle.dump(student_list, output)
+                                os.system("cls")
+                                print(f"Grade of {grade} Removed From {student.replace('_', ' ')}'s Profile")
+                                sub_choice("Remove Another Grade", remove_grade, "List Student's Grades", list_grades)
+                                break
+                            else:
+                                os.system("cls")
+                                print("That Student Doesn't Have that Grade")
+                                sub_choice("Remove Another Grade", remove_grade, "List Student's Grades", list_grades)
+                                continue
+                        else:
+                            print("Enter a Grade From 0-100")
+                            continue
+        else:
+            os.system("cls")
+            print("That Student Doesn't exist")
+            sub_choice("Try Again", remove_grade, "List Students", list_students)
+    else:
+        no_students()
 def remove_grade():
-    print()
+    print("Which Student Would You Like to Remove")
+    student = input().lower()
+    for i, sublist in enumerate(student_list):
+        if student in sublist:
+            student_list.remove(i)
 def choice_input():
     while True:
-        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit")
+        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find the Student's or Class Average\n4: Remove Student ot Grade\n5: Exit")
         try:
             choice = int(input())
         except:
@@ -273,11 +311,12 @@ def choice_input():
             break
         elif choice == 3:
             os.system("cls")
+            sub_choice("Find Student's Average", student_average, "Find Class Average", class_average)
             student_average()
             break
         elif choice == 4:
             os.system("cls")
-            class_average()
+            remove_grade()
             break
         elif choice == 5:
             os.system("cls")
