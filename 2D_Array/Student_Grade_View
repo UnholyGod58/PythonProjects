@@ -2,7 +2,7 @@
 #Started 10-02-2023
 #Simple Program to Enter and Check Student Grades
 #[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
-#Listen Time: 07:033:04
+#Listen Time: 09:030:08
 
 import os, re, pickle
 os.system("cls")
