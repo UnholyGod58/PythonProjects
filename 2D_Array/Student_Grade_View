@@ -254,6 +254,39 @@ def add_grade():
     else: 
         no_students()
 def remove_grade():
+    if len(student_list) != 0:
+        student = input().lower()
+        for i, sublist in enumerate(student_list):
+                if student in sublist:
+                    if len(student_list[i]) == 1:
+                        print("Student Has No Grades")
+                        sub_choice("Add a Grade", add_grade, "Remove Student", remove_student)
+                        break
+                    else:
+                        print("What Grade Would You Like to Remove")
+                        grade = input()
+                        if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
+                            grade = '{0:.2f}'.format(float(grade))
+                            if grade in student_list[i]:
+                                student_list[i].remove(grade)
+                                with open("2d_Array\student_list.bin", "wb") as output:
+                                    pickle.dump(student_list, output)
+                                os.system("cls")
+                                print(f"Grade of {grade} Removed From {student.replace('_', ' ')}'s Profile")
+                                sub_choice("Remove Another Grade", remove_grade, "List Student's Grades", list_grades)
+                                break
+                            else:
+                                os.system("cls")
+                                print("That Grade is not on Student's Profile")
+                                sub_choice("Try Again", remove_grade, "List Student's Grades", list_grades)
+                        else:
+                            print("Enter a Grade From 0-100")
+                            continue
+        else:
+            student_not_found()
+    else:
+        no_students()
+def remove_student():
     print()
 def choice_input():
     while True:
