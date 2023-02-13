@@ -4,11 +4,14 @@
 #[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
 #Listen Time: 07:033:04
 
-import os
-import re
+import os, re, pickle
 os.system("cls")
-student_list = [["test", 76.4, 92.7]]
-has_grades = False
+
+
+with open("2d_Array\student_list.bin", "rb") as data:
+    student_list = pickle.load(data)
+
+
 print("Welcome")
 
 def sub_choice(option1, option1_result, option2, option2_result):
@@ -119,19 +122,20 @@ def student_average():
         no_students()
 def class_average():
     if len(student_list) != 0:
-        if has_grades:
-            sum = 0
-            count = 0
-            for i in student_list:
-                for j in i:
-                    if isinstance(j, float):
-                        sum += j
-                        count += 1    
-            avg = '{0:.2}'.format(sum/count)
-            print(f"Classes Average is:\n\n{avg}")
-            input("\nPress Enter to Continue")
-            os.system("cls")
-            sub_choice("Add Another Student", try_add_student, "Add another Grade", add_grade)
+        for i in student_list:
+            if len(i) > 1:
+                sum = 0
+                count = 0
+                for i in student_list:
+                    for j in i:
+                        if isinstance(j, float):
+                            sum += j
+                            count += 1    
+                avg = '{0:.2}'.format(sum/count)
+                print(f"Classes Average is:\n\n{avg}")
+                input("\nPress Enter to Continue")
+                os.system("cls")
+                sub_choice("Add Another Student", try_add_student, "Add another Grade", add_grade)
         else:
             print("No Grades Available")
             sub_choice("Add a Grade", add_grade, "Add Another Student", try_add_student)
@@ -176,6 +180,8 @@ def list_grades():
 def add_student(name):
     global student_list
     student_list.append([name])
+    with open("2d_Array\student_list.bin", "wb") as output:
+        pickle.dump(student_list, output)
     os.system("cls")
     print(f"Student, {name.replace('_', ' ')},Added to the List")
     sub_choice("Add Another Student", try_add_student, "Add a Grade to a Student", add_grade)
@@ -213,7 +219,6 @@ def try_add_student():
                 add_student(student_name)
 def add_grade():
     global student_list
-    global has_grades
     if len(student_list) != 0:
         check_list = [sublist[0] for sublist in student_list]
         print("Which Student Woud you Like to Grade:")
@@ -236,7 +241,8 @@ def add_grade():
                 if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
                     grade = '{0:.2f}'.format(float(grade))
                     student_list[index].append(grade)
-                    has_grades = True
+                    with open("2d_Array\student_list.bin", "wb") as output:
+                        pickle.dump(student_list, output)
                     os.system("cls")
                     print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
                     sub_choice("Add Another Grade", add_grade, "List Student's Grades", list_grades)
@@ -247,6 +253,8 @@ def add_grade():
             student_not_found(add_grade)
     else: 
         no_students()
+def remove_grade():
+    print()
 def choice_input():
     while True:
         print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit")

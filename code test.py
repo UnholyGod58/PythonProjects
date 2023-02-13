@@ -1,18 +1,24 @@
 
+import os
+
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
 string = "test 1space  2paces   3spaces"
 user_in = 1
 
 
-sum = 0
-count = 0
-for i in values:
-    for j in i:
-        if isinstance(j, float):
-            sum += j
-            count += 1    
-            avg = sum/count
-print(avg)
+#sum = 0
+#count = 0
+#for i in values:
+#    for j in i:
+#        if isinstance(j, float):
+#            sum += j
+#            count += 1    
+#            avg = sum/count
+#print(avg)
+
+base = os.path.dirname(os.path.realpath("student_list.bin"))
+print(base + "/2D_Array/student_list.bin")
+input()
     
 
 #index = 0
