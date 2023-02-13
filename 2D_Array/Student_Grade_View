@@ -118,15 +118,25 @@ def student_average():
             student_not_found(student_average)
         no_students()
 def class_average():
-    sum = 0
-    count = 0
-    for i in student_list:
-        for j in i:
-            if isinstance(j, float):
-                sum += j
-                count += 1    
-    avg = '{0:.2}'.format(sum/count)
-    print(avg)
+    if len(student_list) != 0:
+        if has_grades:
+            sum = 0
+            count = 0
+            for i in student_list:
+                for j in i:
+                    if isinstance(j, float):
+                        sum += j
+                        count += 1    
+            avg = '{0:.2}'.format(sum/count)
+            print(f"Classes Average is:\n\n{avg}")
+            input("\nPress Enter to Continue")
+            os.system("cls")
+            sub_choice("Add Another Student", try_add_student, "Add another Grade", add_grade)
+        else:
+            print("No Grades Available")
+            sub_choice("Add a Grade", add_grade, "Add Another Student", try_add_student)
+    else:
+        no_students()
 def list_students():
     if len(student_list) != 0:
         print("These are the Students:\n")
