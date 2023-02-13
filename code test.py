@@ -1,8 +1,19 @@
 
-values = [["user", 1.4, 2], ["user2", 2.4, 3.6], ["user3", 3, 4]]
+values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
 string = "test 1space  2paces   3spaces"
-
 user_in = 1
+
+
+sum = 0
+count = 0
+for i in values:
+    for j in i:
+        if isinstance(j, float):
+            sum += j
+            count += 1    
+            avg = sum/count
+print(avg)
+    
 
 #index = 0
 #while index < len(values[user_in]):
