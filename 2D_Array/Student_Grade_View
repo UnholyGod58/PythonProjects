@@ -303,7 +303,7 @@ def remove_student():
         no_students()
 def choice_input():
     while True:
-        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find the Student's Average\n4: Find the Class Average\n5: Exit")
+        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find Class or Student's Average\n4: Remove Student or Grade\n5: Exit")
         try:
             choice = int(input())
         except:
@@ -319,11 +319,11 @@ def choice_input():
             break
         elif choice == 3:
             os.system("cls")
-            student_average()
+            sub_choice("Find a Student's Average", student_average, "Find Class Average", class_average)
             break
         elif choice == 4:
             os.system("cls")
-            class_average()
+            sub_choice("Remove Student", remove_student, "Remove Grade From a Student", remove_grade)
             break
         elif choice == 5:
             os.system("cls")
