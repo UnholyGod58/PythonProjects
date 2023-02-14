@@ -114,6 +114,7 @@ def student_average():
                             print("Enter a Vaild Option")                
         else:
             student_not_found(student_average)
+    else:
         no_students()
 def class_average():
     if len(student_list) >= 2:
