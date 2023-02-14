@@ -1,7 +1,8 @@
 #Joshua Hodder
 #started [13/02/2023]
+#works [14/02/2023] - 12:19am
 # Seach and Sort Through a List of Names
-#listen time: 
+#listen time: 01:23:31
 
 import os
 
@@ -9,7 +10,6 @@ os.system('cls')
 
 names = ["Ava", "Ethan", "Emma", "Michael", "Isabelle", "William", "Sophia", "James", "Olivia", "Alexander", "Mia", "Benjamin", "Charlotte", "Daniel", "Abigail"]
 sorted_names = names
-
 
 def input_wait():
     input("Press Enter to Continue...")
@@ -72,7 +72,6 @@ def remove_list():
                 else:
                     print("Enter 1 or 2")
         
-
 def display_list():
     print("This is the Current List of Names:")
     for i in names:
@@ -153,4 +152,5 @@ def menu():
         os.system('cls')
         print("Enter an Option 1-5")
         menu()
+
 menu()
