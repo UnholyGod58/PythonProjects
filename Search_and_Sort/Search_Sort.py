@@ -14,7 +14,41 @@ sorted_names = names
 def input_wait():
     input("Press Enter to Continue...")
     os.system('cls')
-    choices()
+    menu()
+
+def add_list():
+    print("What Name Would You Like To Add?")
+    name = input().capitalize()
+    if name.isalpha():
+        for i in names:
+            if not name in i:
+                names.append(name)
+                print(f"Added {name} to the List\nNote: You Should Re-Sort the List")
+                input_wait()
+        else:
+            print(name, " Is Already In The List\n1: Try Again\n2: Return to the Menu")
+            while True:
+                try:
+                    choice = int(input())
+                except:
+                    os.system('cls')
+                    print("Enter 1 or 2")
+                    continue
+                if choice == 1:
+                    add_list()
+                    break
+                elif choice == 2:
+                    menu()
+                    break
+                else:
+                    print("Enter 1 or 2")      
+    else:
+        os.system('cls')
+        print("First Name Only\nNo Spaces, Numbers, or Special Characters")
+        add_list()
+        
+def remove_list():
+    print()
 
 def display_list():
     print("This is the Current List of Names:")
@@ -72,7 +106,7 @@ def choose_sort_list():
         print("Enter an Option 1-2")
         choose_sort_list()
     
-def choices():
+def menu():
     print("What Would you like to do?\n1: Print the List 'as is'\n2: Sort the List\n3: Add to the List\n4: Remove from the List\n5: Exit")
     try:
         choice = int(input())
@@ -96,4 +130,4 @@ def choices():
         os.system('cls')
         print("Enter an Option 1-5")
         choices()
-choices()
+menu()
