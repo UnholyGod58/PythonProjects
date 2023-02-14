@@ -18,7 +18,7 @@ def input_wait():
 
 def add_list():
     print("What Name Would You Like To Add?")
-    name = input().capitalize()
+    name = input().lower().capitalize()
     if name.isalpha():
         for i in names:
             if not name in i:
@@ -48,7 +48,30 @@ def add_list():
         add_list()
         
 def remove_list():
-    print()
+    print("What Name Would You Like To Remove?")
+    name = input().lower().capitalize()
+    for i in names:
+        if name in i:
+            names.remove(name)
+            print(f"Removed {name} From the List\nNote: You Should Re-Sort the List")
+    else:
+        print(name, " Is Not in The List\n1: Try Again\n2: Return to the Menu")
+        while True:
+                try:
+                    choice = int(input())
+                except:
+                    os.system('cls')
+                    print("Enter 1 or 2")
+                    continue
+                if choice == 1:
+                    add_list()
+                    break
+                elif choice == 2:
+                    menu()
+                    break
+                else:
+                    print("Enter 1 or 2")
+        
 
 def display_list():
     print("This is the Current List of Names:")
@@ -113,7 +136,7 @@ def menu():
     except:
         os.system('cls')
         print("Enter an option 1-5")
-        choices()
+        menu()
     if choice == 1:
         os.system('cls')
         display_list()
@@ -129,5 +152,5 @@ def menu():
     else:
         os.system('cls')
         print("Enter an Option 1-5")
-        choices()
+        menu()
 menu()
