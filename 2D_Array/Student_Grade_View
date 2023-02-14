@@ -7,10 +7,8 @@
 import os, re, pickle
 os.system("cls")
 
-
 with open("2d_Array\student_list.bin", "rb") as data:
     student_list = pickle.load(data)
-
 
 print("Welcome")
 
@@ -252,6 +250,7 @@ def add_grade():
         no_students()
 def remove_grade():
     if len(student_list) != 0:
+        print("What Student Would You Like to Remove a Grade From:")
         student = input().lower()
         for i, sublist in enumerate(student_list):
                 if student in sublist:
@@ -285,7 +284,7 @@ def remove_grade():
         no_students()
 def remove_student():
     if len(student_list) != 0:
-        print("What Student would you like to Remove")
+        print("What Student Would You Like to Remove:")
         student = input().lower()
         student_input_check(student)
         for i, sublist in enumerate(student_list):
