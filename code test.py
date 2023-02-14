@@ -1,10 +1,13 @@
 
-import os
+#import os
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
+list = ["test1", "test2", "test3"]
 string = "test 1space  2paces   3spaces"
 user_in = 1
 
+for i in list:
+    print(i)
 
 #sum = 0
 #count = 0
