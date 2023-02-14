@@ -16,10 +16,16 @@ user_in = 1
 #            avg = sum/count
 #print(avg)
 
-base = os.path.dirname(os.path.realpath("student_list.bin"))
-print(base + "/2D_Array/student_list.bin")
-input()
+#base = os.path.dirname(os.path.realpath("student_list.bin"))
+#print(base + "/2D_Array/student_list.bin")
+#input()
     
+
+#i = 1
+#values.remove(i) - no work
+#del values[i] - yes work
+#print(values)
+
 
 #index = 0
 #while index < len(values[user_in]):
