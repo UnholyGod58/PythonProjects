@@ -2,17 +2,14 @@
 #Started 10-02-2023
 #Simple Program to Enter and Check Student Grades
 #[11-02-2023] Simple my ass, its 1:40 am and im trying to make student name and grade inputs work
-#Listen Time: 09:30:08
+#finished 13-02-2023
+#Listen Time: 09:030:08
 
 import os, re, pickle
 os.system("cls")
 
-
 with open("2d_Array\student_list.bin", "rb") as data:
     student_list = pickle.load(data)
-
-
-print("Welcome")
 
 def sub_choice(option1, option1_result, option2, option2_result):
     print(f"What Would You Like to do?\n1: {option1}\n2: {option2}\n3: Return to the Menu")
@@ -78,14 +75,13 @@ def student_input_check(student):
             student = student[:-1]
     while student[0] == " ":
             student = student[1:]
-    student = student.replace(" ", "_")
     return student
 def student_average():
-    if len(student_list) != 0:
+    if len(student_list) >= 2:
         print("Which Student's Average do You Want to See:")
         student = input().lower()
         student = student_input_check(student)
-        if not student.replace("_", "").isalpha():
+        if not student.replace(" ", "").isalpha():
             student_not_found(student_average)
         for i, sublist in enumerate(student_list):
             if student in sublist:
@@ -119,9 +115,10 @@ def student_average():
                             print("Enter a Vaild Option")                
         else:
             student_not_found(student_average)
+    else:
         no_students()
 def class_average():
-    if len(student_list) != 0:
+    if len(student_list) >= 2:
         for i in student_list:
             if len(i) > 1:
                 sum = 0
@@ -142,24 +139,24 @@ def class_average():
     else:
         no_students()
 def list_students():
-    if len(student_list) != 0:
+    if len(student_list) >= 2:
         print("These are the Students:\n")
-        for i in student_list:
-            print(i[0].replace("_", " "))
+        for i in student_list[1:]:
+            print(i[0])
         input("\nPress Enter to Continue")
         os.system("cls")
         sub_choice("View Student's Grades", list_grades, "Add Student", try_add_student)
     else:
-        no_students
+        no_students()
 def list_grades():
-    if len(student_list) != 0:
+    if len(student_list) >= 2:
         print("Which Student's Grades do You Want to See:")
         student = student_input_check(input().lower())
-        if not student.replace("_", "").isalpha():
+        if not student.replace(" ", "").isalpha():
             student_not_found(list_grades)
         for i, sublist in enumerate(student_list):
             if student in sublist:   
-                if len(student_list[i]) != 0:
+                if len(student_list[i]) != 1:
                     os.system("cls")
                     print("Student's Grades:\n")
                     for i in student_list[i][1:]:
@@ -183,85 +180,82 @@ def add_student(name):
     with open("2d_Array\student_list.bin", "wb") as output:
         pickle.dump(student_list, output)
     os.system("cls")
-    print(f"Student, {name.replace('_', ' ')},Added to the List")
+    print(f"Student, {name},Added to the List")
     sub_choice("Add Another Student", try_add_student, "Add a Grade to a Student", add_grade)
 def try_add_student():
     print("Please Enter Student's Name:")
-    while True:
+    for i in student_list:
         student_name = input().lower()
         student_name = student_input_check(student_name)
-        for sublist in student_list:
-            if student_name in sublist:
-                os.system("cls")
-                print("That Student Already Exists")
-                sub_choice("Try Again", try_add_student, "List Students", add_grade)
+        if not student_name in i:
+            if student_name.isalpha():
+                print("You Are Not Entering a Last Name\n Are You Sure You Want to Continue?[y/n]")
+                while True: 
+                    choice = input().lower()
+                    if choice == "y":
+                        add_student(student_name)
+                        break
+                    elif choice == "n":
+                        sub_choice("Try Again", try_add_student, "List Students", add_grade)
+                        break
+                    else: 
+                        print("Enter 'y' or 'n'")
                 break
-        if student_name.isalpha():
-            print("You Are Not Entering a Last Name\n Are You Sure You Want to Continue?[y/n]")
-            while True: 
-                choice = input().lower()
-                if choice == "y":
-                    add_student(student_name)
-                elif choice == "n":
-                    sub_choice("Try Again", try_add_student, "List Students", add_grade)
-                    break
-                else: 
-                    print("Enter 'y' or 'n'")
-            break
-        else:
-            student_name = student_name.replace(" ", "_")
-            if not student_name.replace("_", "").isalpha():
-                os.system("cls")
-                print("Student's Name Should Only Contain Letters and Spaces\nEnter Student's Name:")
-                continue
             else:
-                add_student(student_name)
+                if not student_name.replace(" ", "").isalpha():
+                    os.system("cls")
+                    print("Student's Name Should Only Contain Letters and Spaces\nEnter Student's Name:")
+                    continue
+                else:
+                    add_student(student_name)
+                    break
+    else:
+        print("That Student Already Exists")
+        sub_choice("Try Again", try_add_student, "List Student", list_students)
 def add_grade():
     global student_list
-    if len(student_list) != 0:
-        check_list = [sublist[0] for sublist in student_list]
+    if len(student_list) >= 2:
         print("Which Student Woud you Like to Grade:")
-        choice = student_input_check(input().lower())
-        if choice in check_list and choice.replace("_", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
-            for i, sublist in enumerate(student_list):
-                if choice in sublist:
-                    index = i
-                    break
-            print("What Grade Would You Like to Add (0-100):")
-            try_count = 0
-            while True:
-                try_count += 1
-                if try_count == 10:
-                    os.system("cls")
-                    print("You Have Tried to Add a Grade 10 Times, Go Think About Your Actions")
-                    choice_input()
-                    break
-                grade = input()
-                if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
-                    grade = '{0:.2f}'.format(float(grade))
-                    student_list[index].append(grade)
-                    with open("2d_Array\student_list.bin", "wb") as output:
-                        pickle.dump(student_list, output)
-                    os.system("cls")
-                    print(f"Grade of {grade} Added {choice.replace('_', ' ')}'s Profile")
-                    sub_choice("Add Another Grade", add_grade, "List Student's Grades", list_grades)
-                    break
-                else:
-                    print("Enter a Grade From 0-100")
+        for i, sublist in enumerate(student_list):
+            student = student_input_check(input().lower())
+            if student in sublist and student.replace(" ", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
+                print("What Grade Would You Like to Add (0-100):")
+                try_count = 0
+                while True:
+                    try_count += 1
+                    if try_count == 10:
+                        os.system("cls")
+                        print("You Have Tried to Add a Grade 10 Times, Go Think About Your Actions")
+                        choice_input()
+                        break
+                    grade = input()
+                    if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
+                        grade = '{0:.2f}'.format(float(grade))
+                        student_list[i].append(grade)
+                        with open("2d_Array\student_list.bin", "wb") as output:
+                            pickle.dump(student_list, output)
+                        os.system("cls")
+                        print(f"Grade of {grade} Added {student}'s Profile")
+                        sub_choice("Add Another Grade", add_grade, "List Student's Grades", list_grades)
+                        break
+                    else:
+                        print("Enter a Grade From 0-100")
         else:
             student_not_found(add_grade)
     else: 
         no_students()
-#def remove_grade():
-    if len(student_list) != 0:
-        print("Who's Grade Would You Like to Remove")
+def remove_grade():
+    if len(student_list) >= 2:
+        print("What Student Would You Like to Remove a Grade From:")
         student = input().lower()
-        student = student_input_check(student)
-        for i in student_list:
-            if student in i:
-                for i, sublist in enumerate(student_list):
-                    print("What Grade Would You Like to Remove")
-                    if student in sublist:
+        for i, sublist in enumerate(student_list[2:]):
+                if student in sublist:
+                    if len(student_list[i]) == 1:
+                        print("Student Has No Grades")
+                        sub_choice("Add a Grade", add_grade, "Remove Student", remove_student)
+                        break
+                    else:
+                        print("What Grade Would You Like to Remove")
                         grade = input()
                         if grade.replace(".", "").isdigit() and 0 <= float(grade) <= 100:
                             grade = '{0:.2f}'.format(float(grade))
@@ -270,32 +264,41 @@ def add_grade():
                                 with open("2d_Array\student_list.bin", "wb") as output:
                                     pickle.dump(student_list, output)
                                 os.system("cls")
-                                print(f"Grade of {grade} Removed From {student.replace('_', ' ')}'s Profile")
+                                print(f"Grade of {grade} Removed From {student}'s Profile")
                                 sub_choice("Remove Another Grade", remove_grade, "List Student's Grades", list_grades)
                                 break
                             else:
                                 os.system("cls")
-                                print("That Student Doesn't Have that Grade")
-                                sub_choice("Remove Another Grade", remove_grade, "List Student's Grades", list_grades)
-                                continue
+                                print("That Grade is not on Student's Profile")
+                                sub_choice("Try Again", remove_grade, "List Student's Grades", list_grades)
                         else:
                             print("Enter a Grade From 0-100")
                             continue
         else:
-            os.system("cls")
-            print("That Student Doesn't exist")
-            sub_choice("Try Again", remove_grade, "List Students", list_students)
+            student_not_found(remove_grade)
     else:
         no_students()
-def remove_grade():
-    print("Which Student Would You Like to Remove")
-    student = input().lower()
-    for i, sublist in enumerate(student_list):
-        if student in sublist:
-            student_list.remove(i)
+def remove_student():
+    if len(student_list) >= 2:
+        print("What Student Would You Like to Remove:")
+        student = input().lower()
+        student_input_check(student)
+        for i, sublist in enumerate(student_list):
+            if student in sublist:
+                del student_list[i]
+                with open("2d_Array\student_list.bin", "wb") as output:
+                    pickle.dump(student_list, output)
+                os.system("cls")
+                print(f"{student} Removed From Class")
+                sub_choice("Remove Another Student", remove_student, "List Students", list_students)
+                break
+        else:
+            student_not_found(remove_student)
+    else:
+        no_students()
 def choice_input():
     while True:
-        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find the Student's or Class Average\n4: Remove Student ot Grade\n5: Exit")
+        print(f"Please Chose one of the Following\n1: Add to a Student or Grade\n2: List off Students or Grades\n3: Find Class or Student's Average\n4: Remove Student or Grade\n5: Exit")
         try:
             choice = int(input())
         except:
@@ -311,12 +314,11 @@ def choice_input():
             break
         elif choice == 3:
             os.system("cls")
-            sub_choice("Find Student's Average", student_average, "Find Class Average", class_average)
-            student_average()
+            sub_choice("Find a Student's Average", student_average, "Find Class Average", class_average)
             break
         elif choice == 4:
             os.system("cls")
-            remove_grade()
+            sub_choice("Remove Student", remove_student, "Remove Grade From a Student", remove_grade)
             break
         elif choice == 5:
             os.system("cls")
