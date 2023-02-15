@@ -8,7 +8,7 @@ import os
 
 os.system('cls')
 
-names = ["Ava", "Ethan", "Emma", "Michael", "Isabelle", "William", "Sophia", "James", "Olivia", "Alexander", "Mia", "Benjamin", "Charlotte", "Daniel", "Abigail"]
+names = ["Ava", "Ethan", "Emma", "Dawson", "Isabelle", "William", "Sophia", "James", "Olivia", "Alexander", "Mia", "Benjamin", "Charlotte", "Daniel", "Abigail"]
 sorted_names = names
 
 def input_wait():
