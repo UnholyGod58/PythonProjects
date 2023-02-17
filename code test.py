@@ -2,12 +2,11 @@
 #import os
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
-list = ["test1", "test2", "test3"]
 string = "test 1space  2paces   3spaces"
 user_in = 1
 
-for i in list:
-    print(i)
+#for i in list:
+#    print(i)
 
 #sum = 0
 #count = 0
@@ -22,7 +21,27 @@ for i in list:
 #base = os.path.dirname(os.path.realpath("student_list.bin"))
 #print(base + "/2D_Array/student_list.bin")
 #input()
+
+list = ["test", "testess", "testes", "tessst"]
     
+def selectionSort(array):
+    for i in range(len(array)):
+        min_index = min(range(i, len(array)), key=array.__getitem__) #
+        array[i], array[min_index] = array[min_index], array[i]
+    return array
+
+
+def selectionSort(array, size):
+    for ind in range(size):
+        min_index = ind
+        for j in range(ind + 1, size):
+            if array[j] < array[min_index]:
+               min_index = j    
+        (array[ind], array[min_index]) = (array[min_index], array[ind])
+    return array
+
+list = selectionSort(list)
+print(list)
 
 #i = 1
 #values.remove(i) - no work
