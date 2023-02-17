@@ -8,7 +8,7 @@ import os
 
 os.system('cls')
 
-names = ["Ava", "Ethan", "Emma", "Michael", "Isabelle", "William", "Sophia", "James", "Olivia", "Alexander", "Mia", "Benjamin", "Charlotte", "Daniel", "Abigail"]
+names = ["Ava", "Ethan", "Emma", "Dawson", "Isabelle", "William", "Sophia", "James", "Olivia", "Alexander", "Mia", "Benjamin", "Charlotte", "Daniel", "Abigail"]
 sorted_names = names
 
 def input_wait():
@@ -144,10 +144,13 @@ def menu():
         choose_sort_list()
     elif choice == 3:
         os.system('cls')
+        add_list()
     elif choice == 4:
         os.system('cls')
+        remove_list()
     elif choice == 5:
         os.system('cls')
+        exit()
     else:
         os.system('cls')
         print("Enter an Option 1-5")
