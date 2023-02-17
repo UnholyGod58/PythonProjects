@@ -10,6 +10,7 @@ os.system("cls")
 
 with open("2d_Array\student_list.bin", "rb") as data:
     student_list = pickle.load(data)
+    student_list = [["dawson hoyle", 82.43, 95.67, 87.45], ["dylan baker", 99.2, 98.76, 100, 93.44], ["heburger hruby", 68.76, 59.4, 63.9, 73.45], ["darquiruse kettlebop", 76.35, 84.35, 73.76, 68.97], ["harsterlon radiendens", 80.84, 56.4, 60.34, 78.43]]
 
 def sub_choice(option1, option1_result, option2, option2_result):
     print(f"What Would You Like to do?\n1: {option1}\n2: {option2}\n3: Return to the Menu")
@@ -77,7 +78,7 @@ def student_input_check(student):
             student = student[1:]
     return student
 def student_average():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("Which Student's Average do You Want to See:")
         student = input().lower()
         student = student_input_check(student)
@@ -118,7 +119,7 @@ def student_average():
     else:
         no_students()
 def class_average():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         for i in student_list:
             if len(i) > 1:
                 sum = 0
@@ -139,9 +140,9 @@ def class_average():
     else:
         no_students()
 def list_students():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("These are the Students:\n")
-        for i in student_list[1:]:
+        for i in student_list:
             print(i[0])
         input("\nPress Enter to Continue")
         os.system("cls")
@@ -149,7 +150,7 @@ def list_students():
     else:
         no_students()
 def list_grades():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("Which Student's Grades do You Want to See:")
         student = student_input_check(input().lower())
         if not student.replace(" ", "").isalpha():
@@ -214,7 +215,7 @@ def try_add_student():
         sub_choice("Try Again", try_add_student, "List Student", list_students)
 def add_grade():
     global student_list
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("Which Student Woud you Like to Grade:")
         for i, sublist in enumerate(student_list):
             student = student_input_check(input().lower())
@@ -245,7 +246,7 @@ def add_grade():
     else: 
         no_students()
 def remove_grade():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("What Student Would You Like to Remove a Grade From:")
         student = input().lower()
         for i, sublist in enumerate(student_list[2:]):
@@ -279,7 +280,7 @@ def remove_grade():
     else:
         no_students()
 def remove_student():
-    if len(student_list) >= 2:
+    if len(student_list) >= 1:
         print("What Student Would You Like to Remove:")
         student = input().lower()
         student_input_check(student)
