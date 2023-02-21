@@ -18,7 +18,7 @@ def sub_choice(option1, option1_result, option2, option2_result):
         try:
             choice = int(input())
         except:
-            print("Enter a Vaild Option:")
+            print("Enter a Valid Option:")
             continue
         if choice == 1:
             os.system("cls")
@@ -33,14 +33,14 @@ def sub_choice(option1, option1_result, option2, option2_result):
             choice_input()
             break
         else:
-            print("Enter a Vaild Option:")
+            print("Enter a Valid Option:")
 def no_students():
     print("You Have No Students...\n1: Add a Student\n2:Return to the Menu")
     while True:
         try:
             choice = int(input())
         except:
-            print("Enter a Vaild Option:")
+            print("Enter a Valid Option:")
             continue
         if choice == 1:
             os.system("cls")
@@ -51,7 +51,7 @@ def no_students():
             choice_input()
             break
         else:
-            print("Enter a Vaild Option:")
+            print("Enter a Valid Option:")
 def student_not_found(function):
     os.system("cls")
     print("That Student Cannot be Found\nWould You Like to Try Again?[y/n]")
@@ -103,7 +103,7 @@ def student_average():
                         try:
                             choice = int(input())
                         except:
-                            print("Enter a Vaild Option")
+                            print("Enter a Valid Option")
                         if choice == 1:
                             os.system("cls")
                             add_grade() 
@@ -113,7 +113,7 @@ def student_average():
                             choice_input()
                             break
                         else:
-                            print("Enter a Vaild Option")                
+                            print("Enter a Valid Option")                
         else:
             student_not_found(student_average)
     else:
@@ -216,13 +216,14 @@ def try_add_student():
 def add_grade():
     global student_list
     if len(student_list) >= 2:
-        print("Which Student Woud you Like to Grade:")
+        print("Which Student Would you Like to Grade:")
+        student = student_input_check(input().lower())
         for i, sublist in enumerate(student_list):
-            student = student_input_check(input().lower())
             if student in sublist and student.replace(" ", "").isalpha(): #isalpha makes sure that it doesnt pick up a grade
-                print("What Grade Would You Like to Add (0-100):")
                 try_count = 0
+                os.system("cls")
                 while True:
+                    print("What Grade Would You Like to Add (0-100):")
                     try_count += 1
                     if try_count == 10:
                         os.system("cls")
@@ -303,7 +304,7 @@ def choice_input():
         try:
             choice = int(input())
         except:
-            print("Enter a Vaild Option:")
+            print("Enter a Valid Option:")
             continue
         if choice == 1:
             os.system("cls")
@@ -325,5 +326,5 @@ def choice_input():
             os.system("cls")
             exit("Program Closed")
         else:
-            print("Please Enter a Vaild Option:")
+            print("Please Enter a Valid Option:")
 choice_input()

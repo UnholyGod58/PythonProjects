@@ -1,13 +1,61 @@
 
 #import os
+import pygame
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
-list = ["test1", "test2", "test3"]
+list = ["test11", "test223", "test3"]
 string = "test 1space  2paces   3spaces"
 user_in = 1
 
-for i in list:
-    print(i)
+pygame.init()
+screen = pygame.display.set_mode((1000, 600))
+pygame.display.set_caption("test")
+
+
+screen.fill((255, 255, 255))
+test1 = pygame.rect.Rect(100, 100, 100, 100)
+test2 = pygame.rect.Rect(200, 100, 100, 100)
+
+pygame.display.update()
+pygame.display.flip()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            break
+        if pygame.sprite.spritecollide(test1, test2, False):
+            
+
+#def binary_search(list, low, high, x):
+#
+#    if high >= low:
+#
+#        mid = (high + low) // 2
+#
+#        if list[mid] == x:
+#            return mid
+#
+#        elif list[mid] > x:
+#            return binary_search(list, low, mid - 1, x)
+#
+#        else:
+#            return binary_search(list, mid + 1, high, x)
+#
+#    else:
+#        return -1
+
+
+#def selection_sort():
+#    global list
+#    for i in range(len(list)):
+#        min_index = min(range(i, len(list)), key = list.__getitem__)
+#        list[i], list[min_index] = list[min_index], list[i]
+
+#print(list)
+
+#for i in list:
+#    print(i)
 
 #sum = 0
 #count = 0
