@@ -1,8 +1,7 @@
 #Joshua Hodder
 #started [13/02/2023]
 #works [14/02/2023] - 12:19am
-# Seach and Sort Through a List of Names
-#listen time: 01:23:31
+# Search and Sort Through a List of Names
 
 import os
 
