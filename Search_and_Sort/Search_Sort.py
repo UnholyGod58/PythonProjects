@@ -77,10 +77,16 @@ def display_list():
     for i in names:
         print(i)
     input_wait()
-    
+
+def selectionSort(array):
+    for i in range(len(array)):
+        min_index = min(range(i, len(array)), key=array.__getitem__) #
+        array[i], array[min_index] = array[min_index], array[i]
+    return array
+
 def sort_list():
     global sorted_names
-    print("How Would You like to Sort The List?\n1: Alphabetically\n2: Reverse Alphabetically\n3: Length Accending\n4: Length Descending")
+    print("How Would You like to Sort The List?\n1: Alphabetically\n2: Reverse Alphabetically\n3: Length Acceding\n4: Length Descending")
     try:
         choice = int(input())
     except:
@@ -88,7 +94,8 @@ def sort_list():
         print("Enter an option 1-4")
         sort_list()
     if choice == 1:
-        return sorted(names)
+        sorted_names = selectionSort(names)
+        return sorted_names
     elif choice == 2:
         return sorted(names, reverse=True)
     elif choice == 3:
