@@ -98,7 +98,7 @@ def student_average():
                     os.system("cls")
                     sub_choice("Try Again", student_average, "Add a Grade", add_grade)
                 else:
-                    print("That Student Has no Grades\n1: Add a Grade\n2: Return to the Menue")
+                    print("That Student Has no Grades\n1: Add a Grade\n2: Return to the Menu")
                     while True:
                         try:
                             choice = int(input())

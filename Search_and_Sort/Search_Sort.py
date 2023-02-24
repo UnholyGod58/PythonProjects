@@ -176,6 +176,7 @@ def menu():
             choice = input("What Student Would You Like to Search for?\n").lower()
             i = (binary_search(names, 0, len(sorted_names) - 1, choice)) + 1
             if i == -1:
+                print("Student Not Found")
                 continue
             else:
                 os.system('cls')
@@ -190,3 +191,4 @@ def menu():
         menu()
 
 menu()
+
