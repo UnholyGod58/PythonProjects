@@ -171,19 +171,18 @@ def menu():
         os.system('cls')
         exit()
     elif choice == 5:
-        while True:
+        os.system('cls')
+        choice = input("What Student Would You Like to Search for?\n").lower()
+        i = (binary_search(names, 0, len(sorted_names) - 1, choice))
+        if i != -1:
             os.system('cls')
-            choice = input("What Student Would You Like to Search for?\n").lower()
-            i = (binary_search(names, 0, len(sorted_names) - 1, choice)) + 1
-            if i == -1:
-                print("Student Not Found")
-                continue
-            else:
-                os.system('cls')
-                print(f"{choice} is in Position: {i+1} \nPress Enter to Continue...")
-                input()
-                menu()
-                break
+            print(f"{choice} is in Position: {i+1} \nPress Enter to Continue...")
+            input()
+            menu()
+        else:
+            print("Student Not Found\nPress Enter to Continue...")
+            input()
+            menu()
             
     else:
         os.system('cls')

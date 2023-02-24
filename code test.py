@@ -1,10 +1,15 @@
 
 #import os
-import pygame
+#import pygame
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
-string = "test 1space  2paces   3spaces"
+string = "dawson, hoyle"
 user_in = 1
+
+for i, j in enumerate(string):
+    if "," in j:
+        print(i)
+    
 
 #for i in list:
 #    print(i)
@@ -23,38 +28,38 @@ user_in = 1
 #print(base + "/2D_Array/student_list.bin")
 #input()
 
-list = ["test", "testess", "testes", "tessst"]
+#list = ["test", "testess", "testes", "tessst"]
     
-def selectionSort(array):
-    for i in range(len(array)):
-        min_index = min(range(i, len(array)), key=array.__getitem__) #
-        array[i], array[min_index] = array[min_index], array[i]
-    return array
+#def selectionSort(array):
+#    for i in range(len(array)):
+#        min_index = min(range(i, len(array)), key=array.__getitem__) #
+##        array[i], array[min_index] = array[min_index], array[i]
+#    return array
 
-def binary_search(arr, low, high, x):
-    if high >= low:
-        mid = (high + low) // 2
-        if arr[mid] == x:
-            return mid
-        elif arr[mid] > x:
-            return binary_search(arr, low, mid - 1, x)
+#def binary_search(arr, low, high, x):
+ #   if high >= low:
+  #      mid = (high + low) // 2
+   #     if arr[mid] == x:
+    #        return mid
+     #   elif arr[mid] > x:
+      #      return binary_search(arr, low, mid - 1, x)
+#
+ #       else:
+  #          return binary_search(arr, mid + 1, high, x)
+   # else:
+    #    return -1
 
-        else:
-            return binary_search(arr, mid + 1, high, x)
-    else:
-        return -1
+#def selectionSort(array, size):
+ #   for ind in range(size):
+  #      min_index = ind
+   #     for j in range(ind + 1, size):
+    #        if array[j] < array[min_index]:
+     #          min_index = j    
+      #  (array[ind], array[min_index]) = (array[min_index], array[ind])
+    #return array
 
-def selectionSort(array, size):
-    for ind in range(size):
-        min_index = ind
-        for j in range(ind + 1, size):
-            if array[j] < array[min_index]:
-               min_index = j    
-        (array[ind], array[min_index]) = (array[min_index], array[ind])
-    return array
-
-list = selectionSort(list)
-print(list)
+#list = selectionSort(list)
+#print(list)
 
 #i = 1
 #values.remove(i) - no work
