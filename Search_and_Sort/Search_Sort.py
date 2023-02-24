@@ -100,6 +100,18 @@ def sort_list():
         print("Enter an option 1-4")
         sort_list()
 
+def binary_search(arr, low, high, x):
+    if high >= low:
+        mid = (high + low) // 2
+        if arr[mid].lower() == x:
+            return mid
+        elif arr[mid].lower() > x:
+            return binary_search(arr, low, mid - 1, x)
+        else:
+            return binary_search(arr, mid + 1, high, x)
+    else:
+        return -1
+
 def choose_sort_list():
     global names
     print("What Would You Like to do?\n1: Only Display the List Sorted\n2: Sort the List")
@@ -129,7 +141,8 @@ def choose_sort_list():
         choose_sort_list()
     
 def menu():
-    print("What Would you like to do?\n1: Print the List 'as is'\n2: Sort the List\n3: Add to the List\n4: Remove from the List\n5: Exit")
+    os.system('cls')
+    print("What Would you like to do?\n1: Print the List 'as is'\n2: Sort the List\n3: Add to the List\n4: Remove from the List\n5: Find a Student\n6: Exit")
     try:
         choice = int(input())
     except:
@@ -148,9 +161,23 @@ def menu():
     elif choice == 4:
         os.system('cls')
         remove_list()
-    elif choice == 5:
+    elif choice == 6:
         os.system('cls')
         exit()
+    elif choice == 5:
+        while True:
+            os.system('cls')
+            choice = input("What Student Would You Like to Search for?\n").lower()
+            i = (binary_search(names, 0, len(sorted_names) - 1, choice)) + 1
+            if i == -1:
+                continue
+            else:
+                os.system('cls')
+                print(f"{choice} is in Position: {i+1} \nPress Enter to Continue...")
+                input()
+                menu()
+                break
+            
     else:
         os.system('cls')
         print("Enter an Option 1-5")
