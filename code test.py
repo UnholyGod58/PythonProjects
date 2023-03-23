@@ -3,13 +3,16 @@
 #import pygame
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
-string = "dawson, hoyle"
+string = " jam"
 user_in = 1
 
-for i, j in enumerate(string):
-    if "," in j:
-        print(i)
+#for i, j in enumerate(string):
+#    if "," in j:
+#        print(i)
     
+string[0].replace("")
+print(string)
+
 
 #for i in list:
 #    print(i)
