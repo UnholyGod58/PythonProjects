@@ -11,7 +11,7 @@ pygame.display.set_caption("Da Maze")
 
 def display_text(scale, print, x, y):
     text = pygame.font.Font(None, scale).render(print, True, (255,255,255))
-    screen.blit(text, ((x - text.get_width()//2), y))
+    screen.blit(text, ((x - text.get_width()//2), y - text.get_height()//2))
     return text
 
 def display_menu():
@@ -21,8 +21,9 @@ def display_menu():
     rect_play = i.get_rect()
     i = display_text(75, "Exit", (X_resolution//2), (Y_resolution//1.5))
     rect_exit = i.get_rect()
-    pygame.display.flip()
+    rect_exit.center = ()
     while True:
+        pygame.display.flip()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 break
