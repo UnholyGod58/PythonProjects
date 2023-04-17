@@ -10,7 +10,7 @@ os.system("cls")
 
 with open("2d_Array\student_list.bin", "rb") as data:
     student_list = pickle.load(data)
-#student_list = [[],["dawson", 100, 98.00, 95.00, 95.00], ["dylan", 96.00, 99.80, 94.00, 95.00,  95.00], ["lemburger", 23.40, 45.76, 12.40, 2.10], ["dequiriuse", 78.4, 69.69, 65.2, 82.1]]
+student_list = [[],["dawson", 100, 98.00, 95.00, 95.00], ["dylan", 96.00, 99.80, 94.00, 95.00,  95.00], ["lemburger", 23.40, 45.76, 12.40, 2.10], ["dequiriuse", 78.4, 69.69, 65.2, 82.1]]
 
 def sub_choice(option1, option1_result, option2, option2_result):
     print(f"What Would You Like to do?\n1: {option1}\n2: {option2}\n3: Return to the Menu")
