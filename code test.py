@@ -10,9 +10,10 @@ user_in = 1
 #    if "," in j:
 #        print(i)
     
-string[0].replace("")
-print(string)
+#string[0].replace("")
+#print(string)
 
+print(values[0][1:])
 
 #for i in list:
 #    print(i)
