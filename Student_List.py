@@ -1,8 +1,9 @@
-
+#Joshua Hodder
+#Redo of da Listy
+#25/4/'23
 
 
 import os, msvcrt
-
 
 student_list = [["dawson", 100, 98, 95, 95], ["dylan", 96, 99, 94, 95,  95], ["lemburger", 23, 45, 12, 2], ["dequiriuse", 78, 69, 65, 82]]
 
@@ -43,7 +44,7 @@ def student_remove():
         if name in i:
             os.system("cls")
             student_list.remove(i)
-            print("Student Removed\nPress any kwt to Continue")
+            print("Student Removed\nPress any key to Continue")
             msvcrt.getch()
             break
     else:
@@ -157,6 +158,23 @@ def average():
     msvcrt.getch()
     os.system("cls")
     
+def exit():
+    pass    
     
+menus = dict({0:student_add, 1:student_remove, 2:grade_add, 3:grade_remove, 4:average, 5:exit})
+options = [0,1,2,3,4,5]
 
-
+while True:
+    try:
+        choice = int(input("Select an Option:\n0: Add a Student\n1: Remove a Student\n2: Add a Grade\n3: Remove a Grade\n4: List CLass and Average\n5: Exit\n"))
+        if choice in options:
+            os.system("cls")
+            menus[choice]()
+            break
+        else:
+            os.system("cls")
+            print("Enter a Valid Option")
+    except:
+        os.system("cls")
+        print("Enter a Valid Option")
+        
