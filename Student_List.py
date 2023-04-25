@@ -85,9 +85,11 @@ def grade_add():
                     except ValueError:
                         os.system("cls")
                         print("Enter a Grade 0 - 100") 
-            else:
-                print("That Student Already has Their Grades")
-                continue 
+        else:
+            print("That Student Already has Their Grades\nPress any key to Continue")
+            msvcrt.getch()
+            os.system("cls")
+            continue 
     else:
         temp = input("That Student Does Not Exist\nWould you Like to Try Again\n[y/n]")
         while True:
