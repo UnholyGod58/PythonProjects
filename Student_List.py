@@ -1,7 +1,9 @@
 
 
 
-import os 
+import os, msvcrt
+
+
 student_list = [["dawson", 100, 98, 95, 95], ["dylan", 96, 99, 94, 95,  95], ["lemburger", 23, 45, 12, 2], ["dequiriuse", 78, 69, 65, 82]]
 
 def student_add():
@@ -17,6 +19,8 @@ def student_add():
                 else:
                     student_list.append[name]
                     print("Student Added to the List\nPress any key to continue")
+                    msvcrt.getch()
+                    break
     else:
         temp = input("That Student Already Exists\nWould you Like to Add Another Student\n[y/n]")
         while True:
@@ -37,7 +41,11 @@ def student_remove():
     name = input("Enter the Student you Would Like to Remove:\n").trim().lower()
     for i in student_list:
         if name in i:
+            os.system("cls")
             student_list.remove(i)
+            print("Student Removed\nPress any kwt to Continue")
+            msvcrt.getch()
+            break
     else:
         os.system("cls")
         temp = input("That Student Does Not Exist\nWould you Like to Try Again\n[y/n]")
@@ -64,13 +72,14 @@ def grade_add():
                 while True:
                     print("Student Grades:\n" + i[1:])
                     try:
-                        grade = '{0:f}'.format(int(input("Enter the Grade you Would Like to Add:\n")))
+                        grade = int(input("Enter the Grade you Would Like to Add:\n"))
                         if grade < 0 or grade > 100:
                             print("Enter a Grade 0 - 100")
                         else: 
                             os.system("cls")
                             student_list[i].append(grade)
                             print("Grade Added to Student\nPress Any Key to Continue")
+                            msvcrt.getch()
                             break
                     except ValueError:
                         os.system("cls")
@@ -92,7 +101,40 @@ def grade_add():
                 temp = input("Enter y or  n")
 
 def grade_remove():
+    print("Students:")
+    for i in student_list:
+        print(i[0])
     student = input("Enter the Student Name:\n").trim.lower
+    for i in student:
+        if i in student_list:
+            os.system("cls")
+            while True:
+                    print("Student Grades:\n" + i[1:])
+                    try:
+                        grade = int(input("Enter the Grade you Would Like to Remove:\n"))
+                        if grade < 0 or grade > 100:
+                            print("Enter a Grade 0 - 100")
+                        else: 
+                            os.system("cls")
+                            student_list[i].remove(grade)
+                            print("Grade Removed from Student\nPress Any Key to Continue")
+                            msvcrt.getch()
+                            break
+                    except ValueError:
+                        os.system("cls")
+                        print("Enter a Grade 0 - 100")
+    else:
+        temp = input("That Student Does Not Exist\nWould you Like to Try Again\n[y/n]")
+        while True:
+            if temp == "y":
+                os.system("cls")
+                grade_add()
+                break  
+            elif temp == "n":
+                os.system("cls")
+                break
+            else:
+                temp = input("Enter y or  n")
 
 def student_average():
     pass
