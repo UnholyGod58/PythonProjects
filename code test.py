@@ -13,7 +13,7 @@ user_in = 1
 #string[0].replace("")
 #print(string)
 
-print(values[0][1:])
+print(len(values-1))
 
 #for i in list:
 #    print(i)

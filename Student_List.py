@@ -104,7 +104,7 @@ def grade_remove():
     print("Students:")
     for i in student_list:
         print(i[0])
-    student = input("Enter the Student Name:\n").trim.lower
+    student = input("Enter the Student Name:\n").trim().lower()
     for i in student:
         if i in student_list:
             os.system("cls")
@@ -115,11 +115,16 @@ def grade_remove():
                         if grade < 0 or grade > 100:
                             print("Enter a Grade 0 - 100")
                         else: 
-                            os.system("cls")
-                            student_list[i].remove(grade)
-                            print("Grade Removed from Student\nPress Any Key to Continue")
-                            msvcrt.getch()
-                            break
+                            if grade in i:
+                                os.system("cls")
+                                student_list[i].remove(grade)
+                                print("Grade Removed from Student\nPress Any Key to Continue")
+                                msvcrt.getch()
+                                break
+                            else:
+                                os.system("cls")
+                                print("Student Does Not Have This Grade")
+                                continue
                     except ValueError:
                         os.system("cls")
                         print("Enter a Grade 0 - 100")
@@ -136,12 +141,22 @@ def grade_remove():
             else:
                 temp = input("Enter y or  n")
 
-def student_average():
-    pass
+def average():
+    summ = 0
+    count = 0
+    print("Students Average:")
+    for i in student_list:
+        if len(i) != 1:
+            avg = sum(i[1:]) / (len(i) - 1)
+            print(i[0] + " Average: " + avg)
+        else: 
+            print(i[0] + " Average: N/A")
+        summ += sum(i[1:])
+        count += (len(i) - 1)
+    print("\nClass Average: " + (summ/count) + "\nPress any key to Continue")
+    msvcrt.getch()
+    os.system("cls")
+    
+    
 
-def class_average():
-    pass
-
-def list_class():
-    pass
 
