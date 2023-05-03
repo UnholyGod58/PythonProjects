@@ -3,7 +3,7 @@
 #import pygame
 
 values = [["user", 1.4, 2.0], ["user2", 2.4, 3.6], ["user3", 3.1, 4.6]]
-string = " jam"
+string = " jam   "
 user_in = 1
 
 #for i, j in enumerate(string):
@@ -13,7 +13,9 @@ user_in = 1
 #string[0].replace("")
 #print(string)
 
-print(len(values-1))
+print(string.strip())
+
+#print(len(values-1))
 
 #for i in list:
 #    print(i)
