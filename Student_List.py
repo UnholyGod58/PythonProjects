@@ -3,7 +3,8 @@
 #25/4/'23
 
 
-import os, msvcrt, sqlite3 
+import os, msvcrt, sqlite3
+
 
 student_list = [["dawson", 100, 98, 95, 95], ["dylan", 96, 99, 94, 95,  95], ["lemburger", 23, 45, 12, 2], ["dequiriuse", 78, 69, 65, 82]]
 options = [0,1,2,3,4,5]
@@ -202,21 +203,22 @@ def average():
     os.system("cls")
     
 def exit():
-    pass    
+    quit()    
 
 menus = dict({0:student_add, 1:student_remove, 2:grade_add, 3:grade_remove, 4:average, 5:exit})
 
-while True:
+menu = True
+while menu == True:
     try:
         choice = int(input("Select an Option:\n0: Add a Student\n1: Remove a Student\n2: Add a Grade\n3: Remove a Grade\n4: List CLass and Average\n5: Exit\n"))
         if choice in options:
             os.system("cls")
             menus[choice]()
-            break
+            menu = False
         else:
             os.system("cls")
             print("Enter a Valid Option")
     except:
         os.system("cls")
-        print("Enter a Valid Option")
+        print("Enter a Valid Option-")
         
