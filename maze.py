@@ -1,11 +1,14 @@
 #josh is nor girlbossing 
 #Maze
 
-import pygame
+import pygame, sys
 pygame.init()
 
+fps = 60
+fpsClock = pygame.time.Clock()
 X_resolution = 1000
 Y_resolution = 800
+
 screen = pygame.display.set_mode((X_resolution, Y_resolution))
 pygame.display.set_caption("Da Maze")
 
@@ -19,9 +22,10 @@ def display_menu():
     display_text(150, "Da Maze", (X_resolution//2), (Y_resolution//4))
     i = display_text(75, "Play", (X_resolution//2), (Y_resolution//2))
     rect_play = i.get_rect()
+    rect_play.center = ((X_resolution//2), (Y_resolution//2))
     i = display_text(75, "Exit", (X_resolution//2), (Y_resolution//1.5))
     rect_exit = i.get_rect()
-    rect_exit.center = ()
+    rect_exit.center = ((X_resolution//2), (Y_resolution//1.5))
     while True:
         pygame.display.flip()
         for event in pygame.event.get():
@@ -32,12 +36,22 @@ def display_menu():
                     play()
                     break
                 if rect_exit.collidepoint(event.pos):
-                    print("Mark")
                     pygame.quit()
                     exit()
                 
+class wall(pygame.sprite.Sprite):
+    def __init__(self, startX,startY,width,height,wallColor/load_path):
+        super().__init__() 
+
 def play():
-    pass
+    screen.fill((25,25,25))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.
+        pygame.display.update() 
+        fpsClock.tick(fps)
 
 display_menu()
 
