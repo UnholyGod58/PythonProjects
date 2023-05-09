@@ -4,6 +4,8 @@
         "girlbossing",
         "Hodder",
         "MOUSEBUTTONDOWN",
+        "movex",
+        "movey",
         "pygame",
         "warcrime"
     ]

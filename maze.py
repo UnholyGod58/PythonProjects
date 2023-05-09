@@ -8,9 +8,12 @@ fps = 60
 fpsClock = pygame.time.Clock()
 X_resolution = 1000
 Y_resolution = 800
+speed = 10
 
 screen = pygame.display.set_mode((X_resolution, Y_resolution))
 pygame.display.set_caption("Da Maze")
+
+key_input = pygame.key.get_pressed()
 
 def display_text(scale, print, x, y):
     text = pygame.font.Font(None, scale).render(print, True, (255,255,255))
@@ -40,16 +43,23 @@ def display_menu():
                     exit()
                 
 class wall(pygame.sprite.Sprite):
-    def __init__(self, startX,startY,width,height,wallColor/load_path):
+    def __init__(self, startX,startY,width,height,wallColor):
         super().__init__() 
 
 def play():
     screen.fill((25,25,25))
+    ball = pygame.sprite.Sprite
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.
+            if event.type == pygame.K_LEFT:
+                pass
+        movex = (key_input[pygame.K_LEFT] * -speed) + (key_input[pygame.K_RIGHT] * speed)
+        movey = (key_input[pygame.K_UP] * -speed) + (key_input[pygame.K_DOWN] * speed)
+        ball.x += movex
+        ball.y += movey
+        
         pygame.display.update() 
         fpsClock.tick(fps)
 
