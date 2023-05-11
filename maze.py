@@ -44,22 +44,27 @@ def display_menu():
                 
 class wall(pygame.sprite.Sprite):
     def __init__(self, startX,startY,width,height,wallColor):
-        super().__init__() 
+        super().__init__()
+
+def collision(object1, object2):
+    return object1.colliderect(object2)
+
 
 def play():
     screen.fill((25,25,25))
     ball = pygame.sprite.Sprite
     while True:
+        movex = (key_input[pygame.K_LEFT] * -speed) + (key_input[pygame.K_RIGHT] * speed)
+        movey = (key_input[pygame.K_UP] * -speed) + (key_input[pygame.K_DOWN] * speed)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.K_LEFT:
-                pass
-        movex = (key_input[pygame.K_LEFT] * -speed) + (key_input[pygame.K_RIGHT] * speed)
-        movey = (key_input[pygame.K_UP] * -speed) + (key_input[pygame.K_DOWN] * speed)
+            if collision(ball):
+                ball.x -= movex
+                ball.y -= movey
+                movex, movey = 0
         ball.x += movex
-        ball.y += movey
-        
+        ball.y += movey        
         pygame.display.update() 
         fpsClock.tick(fps)
 
