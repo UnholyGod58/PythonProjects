@@ -42,9 +42,8 @@ def display_menu():
                     pygame.quit()
                     exit()
                 
-class wall(pygame.sprite.Sprite):
-    def __init__(self, startX,startY,width,height,wallColor):
-        super().__init__()
+
+
 
 def collision(object1, object2):
     return object1.colliderect(object2)
@@ -52,21 +51,33 @@ def collision(object1, object2):
 
 def play():
     screen.fill((25,25,25))
-    ball = pygame.sprite.Sprite
+    ball = pygame.Rect(X_resolution//2, Y_resolution//2, 10,10)
+    wall1 = pygame.Rect(0,0,X_resolution,10)
+    wall2 = pygame.Rect(0,Y_resolution-10,X_resolution,10)
+    wall3 = pygame.Rect(0,0,10,Y_resolution)
+    wall4 = pygame.Rect(X_resolution-10,0,10,Y_resolution)
+    pygame.draw.rect(screen, (200,0,0), ball)
+    pygame.draw.rect(screen, (100,0,0), wall1)
+    pygame.draw.rect(screen, (100,0,0), wall2)
+    pygame.draw.rect(screen, (100,0,0), wall3)
+    pygame.draw.rect(screen, (100,0,0), wall4)
+    
     while True:
         movex = (key_input[pygame.K_LEFT] * -speed) + (key_input[pygame.K_RIGHT] * speed)
         movey = (key_input[pygame.K_UP] * -speed) + (key_input[pygame.K_DOWN] * speed)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if collision(ball):
+            if collision(ball, wall1):
                 ball.x -= movex
                 ball.y -= movey
                 movex, movey = 0
         ball.x += movex
         ball.y += movey        
+        pygame.draw.rect(screen, (200,0,0), ball)
         pygame.display.update() 
         fpsClock.tick(fps)
+        input()
 
 display_menu()
 
