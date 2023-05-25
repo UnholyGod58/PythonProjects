@@ -56,13 +56,21 @@ def play():
     wall2 = pygame.Rect(0,Y_resolution-10,X_resolution,10)
     wall3 = pygame.Rect(0,0,10,Y_resolution)
     wall4 = pygame.Rect(X_resolution-10,0,10,Y_resolution)
+    wall5 = pygame.Rect(X_resolution//6, 0, 10, Y_resolution * 0.8)
+    wall6 = pygame.Rect(X_resolution//6, Y_resolution * 0.8, X_resolution * 0.2, 10)
+    wall7 = pygame.Rect(X_resolution * (11/30) - 10, Y_resolution * 0.2, 10, Y_resolution * 0.6)
+    wall8 = pygame.Rect(X_resolution * (11/30) - 10, Y_resolution * 0.2, X_resolution * 0.45, 10)
     pygame.draw.rect(screen, (200,0,0), ball)
     pygame.draw.rect(screen, (100,0,0), wall1)
     pygame.draw.rect(screen, (100,0,0), wall2)
     pygame.draw.rect(screen, (100,0,0), wall3)
     pygame.draw.rect(screen, (100,0,0), wall4)
+    pygame.draw.rect(screen, (100,0,0), wall5)
+    pygame.draw.rect(screen, (100,0,0), wall6)
+    pygame.draw.rect(screen, (100,0,0), wall7)
+    pygame.draw.rect(screen, (100,0,0), wall8)
     
-    while True:
+    while True: 
         movex = (key_input[pygame.K_LEFT] * -speed) + (key_input[pygame.K_RIGHT] * speed)
         movey = (key_input[pygame.K_UP] * -speed) + (key_input[pygame.K_DOWN] * speed)
         for event in pygame.event.get():
